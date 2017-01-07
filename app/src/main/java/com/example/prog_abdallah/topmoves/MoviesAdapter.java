@@ -14,9 +14,9 @@ import java.util.List;
  * Created by ProG_AbdALlAh on 1/6/2017.
  */
 
-public class MoviesAdapter extends ArrayAdapter<MoviesUtilities> {
+public class MoviesAdapter extends ArrayAdapter<MoviesInfo> {
 
-    public MoviesAdapter(Context context, List<MoviesUtilities> movies) {
+    public MoviesAdapter(Context context, List<MoviesInfo> movies) {
         super(context, 0, movies);
     }
 
@@ -26,7 +26,7 @@ public class MoviesAdapter extends ArrayAdapter<MoviesUtilities> {
             listItemView = LayoutInflater.from(getContext()).inflate(
                     R.layout.list_item, parent, false);
         }
-        MoviesUtilities moviesUtilities = getItem(position);
+        MoviesInfo moviesUtilities = getItem(position);
 
         ImageView moviesView = (ImageView) listItemView.findViewById(R.id.image);
         int movImage = moviesUtilities.getImageResource();

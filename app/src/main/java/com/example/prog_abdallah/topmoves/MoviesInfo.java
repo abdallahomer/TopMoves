@@ -4,21 +4,21 @@ package com.example.prog_abdallah.topmoves;
  * Created by ProG_AbdALlAh on 1/6/2017.
  */
 
-public class MoviesUtilities {
+public class MoviesInfo {
     String title;
     String date;
     int imageResource;
 
-    public MoviesUtilities(String title, String date, int imageResource) {
+    public MoviesInfo(String title, String date, int imageResource) {
         this.title = title;
         this.date = date;
         this.imageResource = imageResource;
     }
 
-    public MoviesUtilities() {
+    public MoviesInfo() {
     }
 
-    public MoviesUtilities(String title, String overview, int imageResource, String date) {
+    public MoviesInfo(String title, String overview, int imageResource, String date) {
         this.title = title;
         Overview = overview;
         this.imageResource = imageResource;

@@ -3,16 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    >
+    android:background="@color/backgroundColor"
+    android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/image"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_gravity="center_vertical"
-        tools:text="movie pic"
-        />
+        android:contentDescription="@string/movie_image"
+        tools:text="movie pic" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -26,22 +26,20 @@
             android:id="@+id/movieTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
             android:textAppearance="?android:textAppearanceLarge"
             android:textColor="@color/titleColor"
-            android:fontFamily="sans-serif-medium"
             tools:text="San Andarias" />
 
         <TextView
             android:id="@+id/movieDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:paddingTop="@dimen/padding"
             android:textAppearance="?android:textAppearanceMedium"
             android:textColor="@color/releaseYearColor"
-            android:paddingTop="@dimen/padding"
-            android:fontFamily="sans-serif-medium"
-            tools:text="25 april 2015"
-
-            />
+            tools:text="25 april 2015" />
 
     </LinearLayout>
 
