@@ -30,7 +30,7 @@ public class SearchAdapter extends ArrayAdapter<MoviesInfo> {
         View listItemView = convertView;
         if (listItemView == null) {
             listItemView = LayoutInflater.from(getContext()).inflate(
-                    R.layout.list_item, parent, false);
+                    R.layout.search_result_item, parent, false);
         }
 
         MoviesInfo moviesUtilities = getItem(position);
@@ -49,6 +49,7 @@ public class SearchAdapter extends ArrayAdapter<MoviesInfo> {
         TextView overview = (TextView)listItemView.findViewById(R.id.search_overview_id);
         String ov = moviesUtilities.getOverview();
         overview.setText(ov);
+        System.out.println(overview);
 
         TextView titleView = (TextView) listItemView.findViewById(R.id.search_movieTitle_id);
         String title = moviesUtilities.getTitle();

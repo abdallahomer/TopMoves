@@ -42,7 +42,7 @@ public class MoviesAdapter extends ArrayAdapter<MoviesInfo> {
         try {
             Picasso.with(context)
                     .load(moviesUtilities.getImageResource()).resize(150, 150)
-                    .centerCrop()
+                    //.centerCrop()
                     .into(moviesView);
         } catch (Exception e) {
             e.printStackTrace();
