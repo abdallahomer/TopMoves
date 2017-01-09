@@ -28,15 +28,20 @@ public final class MoviesUtils {
 
     public static List<MoviesInfo> fetchMoviesData(String requestUrl) {
 
+        List<MoviesInfo> movies;
+
         URL url = createUrl(requestUrl);
+        Log.i(LOG_TAG, requestUrl);
 
         String jsonResponse = null;
         try {
             jsonResponse = makeHttpRequest(url);
+            System.out.println("Http connected");
         } catch (IOException e) {
             Log.e(LOG_TAG, "Problem making the HTTP request.", e);
         }
-        List<MoviesInfo> movies = extractFeatureFromJson(jsonResponse);
+
+        movies = extractFeatureFromJsonToMainActivity(jsonResponse);
 
         return movies;
     }
@@ -61,14 +66,19 @@ public final class MoviesUtils {
         InputStream inputStream = null;
         try {
             urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestProperty("Content-Type", "application/json");
+            urlConnection.setRequestProperty("trakt-api-version", "2");
+            urlConnection.setRequestProperty("trakt-api-key", URLs.CLIENT_ID);
             urlConnection.setReadTimeout(10000);
             urlConnection.setConnectTimeout(15000);
             urlConnection.setRequestMethod("GET");
+
             urlConnection.connect();
 
             if (urlConnection.getResponseCode() == 200) {
                 inputStream = urlConnection.getInputStream();
                 jsonResponse = readFromStream(inputStream);
+                Log.i(LOG_TAG, jsonResponse);
             } else {
                 Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
             }
@@ -99,7 +109,8 @@ public final class MoviesUtils {
         return output.toString();
     }
 
-    private static List<MoviesInfo> extractFeatureFromJson(String moviesJSON) {
+
+    private static List<MoviesInfo> extractFeatureFromJsonToMainActivity(String moviesJSON) {
         if (TextUtils.isEmpty(moviesJSON)) {
             return null;
         }
@@ -107,22 +118,31 @@ public final class MoviesUtils {
 
         try {
 
-            JSONObject baseJsonResponse = new JSONObject(moviesJSON);
+            JSONArray jsonArray = new JSONArray(moviesJSON);
 
-            JSONArray movieArray = baseJsonResponse.getJSONArray("");
+            for (int i = 0; i < jsonArray.length(); i++) {
 
-            for (int i = 0; i < movieArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                String title = jsonObject.getString("title");
+
+                int year = jsonObject.getInt("year");
+
+                JSONObject image = jsonObject.getJSONObject("images");
+                JSONObject poster = image.getJSONObject("poster");
+                String thumb = poster.getString("thumb");
+
+                Log.i(LOG_TAG,title + "  " + year+"  " + thumb);
+
+                MoviesInfo movie = new MoviesInfo(title, year, thumb);
 
 
-
-                MoviesInfo movies = new MoviesInfo("", "",5);
-
-                moviesList.add(movies);
+                moviesList.add(movie);
             }
+            return moviesList;
         } catch (JSONException e) {
             Log.e("QueryUtils", "Problem parsing the movieQuake JSON results", e);
         }
 
-        return moviesList;
+        return null;
     }
 }

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Top Movies</string>
     <string name="search">Search for movies</string>
-    <string name="action_search">search</string>
+    <string name="action_search">Search</string>
     <string name="movie_image">Image of movie</string>
+    <string name="connection">No Internet connectivity</string>
 </resources>

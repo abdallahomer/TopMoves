@@ -6,10 +6,11 @@ package com.example.prog_abdallah.topmoves;
 
 public class MoviesInfo {
     String title;
-    String date;
-    int imageResource;
+    int date;
+    String imageResource;
+    String overviews;
 
-    public MoviesInfo(String title, String date, int imageResource) {
+    public MoviesInfo(String title, int date, String imageResource) {
         this.title = title;
         this.date = date;
         this.imageResource = imageResource;
@@ -18,45 +19,33 @@ public class MoviesInfo {
     public MoviesInfo() {
     }
 
-    public MoviesInfo(String title, String overview, int imageResource, String date) {
+    public MoviesInfo(String title, String overview, String imageResource, int date) {
         this.title = title;
-        Overview = overview;
+        this.overviews = overview;
         this.imageResource = imageResource;
         this.date = date;
     }
+
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
-    public int getImageResource() {
+    public String getImageResource() {
         return imageResource;
     }
 
-    public void setImageResource(int imageResource) {
-        this.imageResource = imageResource;
-    }
 
-    public String getDate() {
+    public int getDate() {
         return date;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
 
     public String getOverview() {
-        return Overview;
+        return overviews;
     }
 
-    public void setOverview(String overview) {
-        Overview = overview;
-    }
 
-    String Overview;
 
 }
