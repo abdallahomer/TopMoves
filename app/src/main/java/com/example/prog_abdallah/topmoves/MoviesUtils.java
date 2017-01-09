@@ -41,7 +41,12 @@ public final class MoviesUtils {
             Log.e(LOG_TAG, "Problem making the HTTP request.", e);
         }
 
-        movies = extractFeatureFromJsonToMainActivity(jsonResponse);
+        if (requestUrl.contains("?query=")) {
+            movies = extractFeatureFromJsonToSearchActivity(jsonResponse);
+        } else {
+            movies = extractFeatureFromJsonToMainActivity(jsonResponse);
+        }
+
 
         return movies;
     }
@@ -125,13 +130,13 @@ public final class MoviesUtils {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 String title = jsonObject.getString("title");
 
-                int year = jsonObject.getInt("year");
+                String year = jsonObject.getString("released");
 
                 JSONObject image = jsonObject.getJSONObject("images");
                 JSONObject poster = image.getJSONObject("poster");
                 String thumb = poster.getString("thumb");
 
-                Log.i(LOG_TAG,title + "  " + year+"  " + thumb);
+                Log.i(LOG_TAG, title + "  " + year + "  " + thumb);
 
                 MoviesInfo movie = new MoviesInfo(title, year, thumb);
 
@@ -145,4 +150,41 @@ public final class MoviesUtils {
 
         return null;
     }
+
+    private static List<MoviesInfo> extractFeatureFromJsonToSearchActivity(String moviesJSON) {
+        if (TextUtils.isEmpty(moviesJSON)) {
+            return null;
+        }
+        List<MoviesInfo> moviesList = new ArrayList<>();
+
+        try {
+
+            JSONArray jsonArray = new JSONArray(moviesJSON);
+            System.out.println(jsonArray);
+            for (int i = 0; i < jsonArray.length(); i++) {
+
+
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                String title = jsonObject.getString("title");
+
+                String year = jsonObject.getString("released");
+                String overview = jsonObject.getString("overview");
+
+                JSONObject image = jsonObject.getJSONObject("images");
+                JSONObject poster = image.getJSONObject("poster");
+                String thumb = poster.getString("thumb");
+
+                MoviesInfo movie = new MoviesInfo(title, overview, thumb, year);
+
+
+                moviesList.add(movie);
+            }
+        } catch (JSONException e) {
+            Log.e("QueryUtils", "Problem parsing the movieQuake JSON results", e);
+        }
+
+        return moviesList;
+    }
+
+
 }

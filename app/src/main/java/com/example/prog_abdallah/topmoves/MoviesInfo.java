@@ -6,11 +6,11 @@ package com.example.prog_abdallah.topmoves;
 
 public class MoviesInfo {
     String title;
-    int date;
+    String date;
     String imageResource;
     String overviews;
 
-    public MoviesInfo(String title, int date, String imageResource) {
+    public MoviesInfo(String title, String date, String imageResource) {
         this.title = title;
         this.date = date;
         this.imageResource = imageResource;
@@ -19,7 +19,7 @@ public class MoviesInfo {
     public MoviesInfo() {
     }
 
-    public MoviesInfo(String title, String overview, String imageResource, int date) {
+    public MoviesInfo(String title, String overview, String imageResource, String date) {
         this.title = title;
         this.overviews = overview;
         this.imageResource = imageResource;
@@ -37,7 +37,7 @@ public class MoviesInfo {
     }
 
 
-    public int getDate() {
+    public String getDate() {
         return date;
     }
 

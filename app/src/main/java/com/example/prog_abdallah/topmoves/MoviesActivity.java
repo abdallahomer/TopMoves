@@ -20,7 +20,7 @@ public class MoviesActivity extends AppCompatActivity {
     ListView listViewMovies;
     MoviesAdapter moviesAdapter;
     int page_count = 1;
-    int max_pages = 50;
+    int max_pages = 80;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,6 +1,7 @@
 package com.example.prog_abdallah.topmoves;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,32 +14,28 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-
 /**
- * Created by ProG_AbdALlAh on 1/6/2017.
+ * Created by ProG_AbdALlAh on 1/9/2017.
  */
 
-public class MoviesAdapter extends ArrayAdapter<MoviesInfo> {
-
+public class SearchAdapter extends ArrayAdapter<MoviesInfo> {
     Context context;
 
-    public MoviesAdapter(Context context, List<MoviesInfo> movies) {
+    public SearchAdapter(Context context, List<MoviesInfo> movies) {
         super(context, 0, movies);
     }
 
-
     @Override
-    public View getView(int position, View convertView, ViewGroup viewGroup) {
-
+    public View getView(int position, View convertView, ViewGroup parent) {
         View listItemView = convertView;
         if (listItemView == null) {
             listItemView = LayoutInflater.from(getContext()).inflate(
-                    R.layout.list_item, viewGroup, false);
+                    R.layout.list_item, parent, false);
         }
 
         MoviesInfo moviesUtilities = getItem(position);
 
-        ImageView moviesView = (ImageView) listItemView.findViewById(R.id.image);
+        ImageView moviesView = (ImageView) listItemView.findViewById(R.id.search_image);
         try {
             Picasso.with(context)
                     .load(moviesUtilities.getImageResource()).resize(150, 150)
@@ -48,21 +45,21 @@ public class MoviesAdapter extends ArrayAdapter<MoviesInfo> {
             e.printStackTrace();
         }
 
+        Log.i("Details",moviesUtilities.getTitle()+moviesUtilities.getDate()+moviesUtilities.getOverview());
+        TextView overview = (TextView)listItemView.findViewById(R.id.search_overview_id);
+        String ov = moviesUtilities.getOverview();
+        overview.setText(ov);
 
-        TextView titleView = (TextView) listItemView.findViewById(R.id.movieTitle);
+        TextView titleView = (TextView) listItemView.findViewById(R.id.search_movieTitle_id);
         String title = moviesUtilities.getTitle();
         titleView.setText(title);
 
-        TextView releaseDateView = (TextView) listItemView.findViewById(R.id.movieDate);
+        TextView releaseDateView = (TextView) listItemView.findViewById(R.id.search_movieDate_id);
         String releaseDate = moviesUtilities.getDate();
         releaseDateView.setText(releaseDate);
 
-        Log.i("Movies Data  ", moviesUtilities.getDate() + moviesUtilities.getImageResource() + moviesUtilities.getTitle());
 
 
         return listItemView;
     }
-
-
 }
-

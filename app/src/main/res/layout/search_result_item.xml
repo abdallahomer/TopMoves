@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@color/backgroundColor">
+
+    <ImageView
+        android:id="@+id/search_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center_vertical"
+        android:contentDescription="@string/movie_image"
+        tools:text="movie pic" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/search_movieTitle_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:textColor="@color/titleColor"
+            tools:text="San Andarias" />
+
+        <TextView
+            android:id="@+id/search_movieDate_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:paddingTop="@dimen/padding"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="@color/releaseYearColor"
+            tools:text="25 april 2015" />
+        <TextView
+            android:id="@+id/search_overview_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/padding"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="@color/releaseYearColor"
+            android:maxLines="5"
+            android:maxHeight="20dp"
+            android:textSize="14sp"
+            tools:text="Shortly overview"
+            />
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -23,4 +23,16 @@ public class URLs {
         return url.toString();
     }
 
+    public static String getSearchURL(String keyword,int page){
+        StringBuilder url = new StringBuilder();
+        url.append(BASE_URL)
+                .append("search")
+                .append("?query=")
+                .append(keyword)
+                .append("&type=movie")
+                .append("&page="+page);
+
+        return url.toString();
+    }
+
 }
