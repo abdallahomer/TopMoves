@@ -15,51 +15,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MoviesActivity extends AppCompatActivity {
+public class MoviesActivity extends AppCompatActivity implements LoadingMoviesFromList {
     public static final String LOG_TAG = MoviesActivity.class.getName();
     ListView listViewMovies;
     MoviesAdapter moviesAdapter;
     int page_count = 1;
     int max_pages = 80;
+    List<MoviesInfo> popularMoves;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movies);
         listViewMovies = (ListView) findViewById(R.id.top_movies_list_view);
-
+        popularMoves = new ArrayList<>();
 
         getDataFromUrl(URLs.getTopMoviesURL("popular", page_count));
-        moviesAdapter = new MoviesAdapter(this, new ArrayList<MoviesInfo>());
+        moviesAdapter = new MoviesAdapter(this, popularMoves);
         listViewMovies.setAdapter(moviesAdapter);
         listViewMovies.setOnScrollListener(onScrollListener());
 
     }
 
     private void getDataFromUrl(String url) {
-        new MoviesAsyncTask().execute(url);
+        new MoviesUtils(this, url, this).execute();
     }
 
-    private class MoviesAsyncTask extends AsyncTask<String, String, List<MoviesInfo>> {
-
-        @Override
-        protected List<MoviesInfo> doInBackground(String... urls) {
-
-            if (urls.length < 1 || urls[0] == null) {
-                return null;
-            }
-
-            List<MoviesInfo> result = MoviesUtils.fetchMoviesData(urls[0]);
-            return result;
-        }
-
-        @Override
-        protected void onPostExecute(List<MoviesInfo> data) {
-            if (data != null && !data.isEmpty()) {
-                moviesAdapter.addAll(data);
-            }
-        }
-    }
 
     private AbsListView.OnScrollListener onScrollListener() {
 
@@ -102,5 +83,12 @@ public class MoviesActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
 
+    }
+
+    @Override
+    public void onPopularMoviesLoaded(List<MoviesInfo> movies, int scroll) {
+
+        popularMoves.addAll(movies);
+        moviesAdapter.notifyDataSetChanged();
     }
 }

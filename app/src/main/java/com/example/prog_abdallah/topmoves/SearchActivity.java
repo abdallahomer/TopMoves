@@ -18,6 +18,7 @@ public class SearchActivity extends AppCompatActivity {
     int page_count = 1;
     SearchAdapter searchAdapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,9 +26,10 @@ public class SearchActivity extends AppCompatActivity {
 
         searchListView = (ListView) findViewById(R.id.search_movies_list_view);
 
-        getDataFromUrl(URLs.getTopMoviesURL("popular", page_count));
+        //getDataFromUrl(URLs.getTopMoviesURL("popular", page_count));
         searchAdapter = new SearchAdapter(this, new ArrayList<MoviesInfo>());
         searchListView.setAdapter(searchAdapter);
+        //searchListView.setOnScrollListener(onScrollListener());
 
 
     }
@@ -35,6 +37,7 @@ public class SearchActivity extends AppCompatActivity {
     private void getDataFromUrl(String url) {
         new SearchAsyncTask().execute(url);
     }
+
 
     public class SearchAsyncTask extends AsyncTask<String, String, List<MoviesInfo>> {
 
@@ -45,8 +48,8 @@ public class SearchActivity extends AppCompatActivity {
                 return null;
             }
 
-            List<MoviesInfo> result = MoviesUtils.fetchMoviesData(urls[0]);
-            return result;
+           // List<MoviesInfo> result = MoviesUtils.fetchMoviesData(urls[0]);
+            return null;
 
         }
 

@@ -1,5 +1,7 @@
 package com.example.prog_abdallah.topmoves;
 
+import android.content.Context;
+import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -19,17 +21,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public final class MoviesUtils {
+public final class MoviesUtils extends AsyncTask<String, String, String>{
     private static final String LOG_TAG = MoviesUtils.class.getSimpleName();
+    private LoadingMoviesFromList loadingMoviesFromList;
+    Context context;
+    String requestUrl;
+    int scroll;
 
-    private MoviesUtils() {
-
+    public MoviesUtils(Context context, String requestUrl, LoadingMoviesFromList loadingMoviesFromList){
+        this.context = context;
+        this.requestUrl = requestUrl;
+        this.loadingMoviesFromList = loadingMoviesFromList;
+        scroll = 0;
+    }
+    public MoviesUtils(Context context, String requestUrl, int scroll, LoadingMoviesFromList loadingMoviesFromList){
+        this.context = context;
+        this.requestUrl = requestUrl;
+        this.loadingMoviesFromList = loadingMoviesFromList;
+        this.scroll = scroll;
     }
 
-    public static List<MoviesInfo> fetchMoviesData(String requestUrl) {
-
-        List<MoviesInfo> movies;
-
+    @Override
+    protected String doInBackground(String... strings) {
         URL url = createUrl(requestUrl);
         Log.i(LOG_TAG, requestUrl);
 
@@ -41,14 +54,24 @@ public final class MoviesUtils {
             Log.e(LOG_TAG, "Problem making the HTTP request.", e);
         }
 
+        return jsonResponse;
+    }
+
+    @Override
+    protected void onPostExecute(String jsonResponse) {
+        List<MoviesInfo> movies;
+
         if (requestUrl.contains("?query=")) {
             movies = extractFeatureFromJsonToSearchActivity(jsonResponse);
         } else {
             movies = extractFeatureFromJsonToMainActivity(jsonResponse);
         }
 
+        setMoviesData(movies,scroll);
+    }
 
-        return movies;
+    private void setMoviesData(List<MoviesInfo> movies, int scroll) {
+        loadingMoviesFromList.onPopularMoviesLoaded(movies,scroll);
     }
 
     private static URL createUrl(String stringUrl) {
