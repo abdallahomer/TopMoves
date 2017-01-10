@@ -21,20 +21,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public final class MoviesUtils extends AsyncTask<String, String, String>{
+public final class MoviesUtils extends AsyncTask<String, String, String> {
     private static final String LOG_TAG = MoviesUtils.class.getSimpleName();
     private LoadingMoviesFromList loadingMoviesFromList;
     Context context;
     String requestUrl;
     int scroll;
 
-    public MoviesUtils(Context context, String requestUrl, LoadingMoviesFromList loadingMoviesFromList){
+    public MoviesUtils(Context context, String requestUrl, LoadingMoviesFromList loadingMoviesFromList) {
         this.context = context;
         this.requestUrl = requestUrl;
         this.loadingMoviesFromList = loadingMoviesFromList;
         scroll = 0;
     }
-    public MoviesUtils(Context context, String requestUrl, int scroll, LoadingMoviesFromList loadingMoviesFromList){
+
+    public MoviesUtils(Context context, String requestUrl, int scroll, LoadingMoviesFromList loadingMoviesFromList) {
         this.context = context;
         this.requestUrl = requestUrl;
         this.loadingMoviesFromList = loadingMoviesFromList;
@@ -67,11 +68,11 @@ public final class MoviesUtils extends AsyncTask<String, String, String>{
             movies = extractFeatureFromJsonToMainActivity(jsonResponse);
         }
 
-        setMoviesData(movies,scroll);
+        setMoviesData(movies, scroll);
     }
 
     private void setMoviesData(List<MoviesInfo> movies, int scroll) {
-        loadingMoviesFromList.onPopularMoviesLoaded(movies,scroll);
+        loadingMoviesFromList.onPopularMoviesLoaded(movies, scroll);
     }
 
     private static URL createUrl(String stringUrl) {
@@ -185,22 +186,34 @@ public final class MoviesUtils extends AsyncTask<String, String, String>{
             JSONArray jsonArray = new JSONArray(moviesJSON);
             System.out.println(jsonArray);
             for (int i = 0; i < jsonArray.length(); i++) {
-
-
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                String title = jsonObject.getString("title");
+                MoviesInfo movies = new MoviesInfo();
 
-                String year = jsonObject.getString("released");
-                String overview = jsonObject.getString("overview");
+                if (!jsonObject.isNull("movie")) {
+                    JSONObject movie = jsonObject.getJSONObject("movie");
 
-                JSONObject image = jsonObject.getJSONObject("images");
-                JSONObject poster = image.getJSONObject("poster");
-                String thumb = poster.getString("thumb");
+                    if (!movie.isNull("title"))
+                        movies.setTitle(movie.getString("title"));
+                    if (!movie.isNull("year"))
+                        movies.setYear(movie.getInt("year"));
+                    if (!movie.isNull("overview"))
+                        movies.setOverviews(movie.getString("overview"));
+                    if (!movie.isNull("images")) {
+                        JSONObject jj = movie.getJSONObject("images").getJSONObject("poster");
+                        if (!jj.isNull("thumb")) {
+                            movies.setImageResource(jj.getString("thumb"));
+                        }
+                    }
 
-                MoviesInfo movie = new MoviesInfo(title, overview, thumb, year);
+
+                    Log.i(LOG_TAG, movies.getTitle());
+                    Log.i(LOG_TAG, movies.getYear() + " ");
+                    Log.i(LOG_TAG, movies.getImageResource() + "  ");
+                    Log.i(LOG_TAG, movies.getOverview() + "");
 
 
-                moviesList.add(movie);
+                    moviesList.add(movies);
+                }
             }
         } catch (JSONException e) {
             Log.e("QueryUtils", "Problem parsing the movieQuake JSON results", e);

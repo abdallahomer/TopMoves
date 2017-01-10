@@ -1,7 +1,6 @@
 package com.example.prog_abdallah.topmoves;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,8 +20,8 @@ import java.util.List;
 public class SearchAdapter extends ArrayAdapter<MoviesInfo> {
     Context context;
 
-    public SearchAdapter(Context context, List<MoviesInfo> movies) {
-        super(context, 0, movies);
+    public SearchAdapter(Context context) {
+        super(context,0);
     }
 
     @Override
@@ -45,19 +44,19 @@ public class SearchAdapter extends ArrayAdapter<MoviesInfo> {
             e.printStackTrace();
         }
 
-        Log.i("Details",moviesUtilities.getTitle()+moviesUtilities.getDate()+moviesUtilities.getOverview());
+        Log.i("Details",moviesUtilities.getTitle()+moviesUtilities.getYear()+moviesUtilities.getOverview());
         TextView overview = (TextView)listItemView.findViewById(R.id.search_overview_id);
         String ov = moviesUtilities.getOverview();
         overview.setText(ov);
-        System.out.println(overview);
+        System.out.println("abdallah"+overview);
 
         TextView titleView = (TextView) listItemView.findViewById(R.id.search_movieTitle_id);
         String title = moviesUtilities.getTitle();
         titleView.setText(title);
 
         TextView releaseDateView = (TextView) listItemView.findViewById(R.id.search_movieDate_id);
-        String releaseDate = moviesUtilities.getDate();
-        releaseDateView.setText(releaseDate);
+        int year = moviesUtilities.getYear();
+        releaseDateView.setText(year);
 
 
 

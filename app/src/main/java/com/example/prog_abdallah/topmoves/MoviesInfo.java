@@ -8,7 +8,34 @@ public class MoviesInfo {
     String title;
     String date;
     String imageResource;
+
+    public void setOverviews(String overviews) {
+        this.overviews = overviews;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setImageResource(String imageResource) {
+        this.imageResource = imageResource;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
     String overviews;
+
+    public int getYear() {
+        return year;
+    }
+
+    int year;
 
     public MoviesInfo(String title, String date, String imageResource) {
         this.title = title;
