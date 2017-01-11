@@ -10,6 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +24,7 @@ public class MoviesActivity extends AppCompatActivity implements LoadingMoviesFr
     int page_count = 1;
     int max_pages = 80;
     List<MoviesInfo> popularMoves;
+    TextView noInternet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +32,21 @@ public class MoviesActivity extends AppCompatActivity implements LoadingMoviesFr
         setContentView(R.layout.activity_movies);
         listViewMovies = (ListView) findViewById(R.id.top_movies_list_view);
         popularMoves = new ArrayList<>();
+        noInternet = (TextView)findViewById(R.id.no_internet);
 
-        getDataFromUrl(URLs.getTopMoviesURL("popular", page_count));
-        moviesAdapter = new MoviesAdapter(this, popularMoves);
-        listViewMovies.setAdapter(moviesAdapter);
-        listViewMovies.setOnScrollListener(onScrollListener());
+        if(CheckInternet.isOnline(getApplicationContext())){
+            View waiting = findViewById(R.id.waiting);
+            waiting.setVisibility(View.GONE);
+            getDataFromUrl(URLs.getTopMoviesURL("popular", page_count));
+            moviesAdapter = new MoviesAdapter(this, popularMoves);
+            listViewMovies.setAdapter(moviesAdapter);
+            listViewMovies.setOnScrollListener(onScrollListener());
+        }else{
+            View waiting = findViewById(R.id.waiting);
+            waiting.setVisibility(View.GONE);
+            noInternet.setText(R.string.no_internet);
+        }
+
 
     }
 
