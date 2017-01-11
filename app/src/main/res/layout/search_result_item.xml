@@ -47,8 +47,8 @@
             android:paddingTop="@dimen/padding"
             android:textAppearance="?android:textAppearanceMedium"
             android:textColor="@color/releaseYearColor"
-            android:maxLines="5"
-            android:maxHeight="20dp"
+            android:maxLines="7"
+            android:maxHeight="30dp"
             android:textSize="14sp"
             tools:text="Shortly overview"
             />

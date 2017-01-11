@@ -13,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -68,11 +69,7 @@ public final class MoviesUtils extends AsyncTask<String, String, String> {
             movies = extractFeatureFromJsonToMainActivity(jsonResponse);
         }
 
-        setMoviesData(movies, scroll);
-    }
-
-    private void setMoviesData(List<MoviesInfo> movies, int scroll) {
-        loadingMoviesFromList.onPopularMoviesLoaded(movies, scroll);
+        loadingMoviesFromList.onPopularMoviesLoaded(movies, this.scroll);
     }
 
     private static URL createUrl(String stringUrl) {
@@ -152,20 +149,20 @@ public final class MoviesUtils extends AsyncTask<String, String, String> {
             for (int i = 0; i < jsonArray.length(); i++) {
 
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                String title = jsonObject.getString("title");
+                MoviesInfo moviesInfo = new MoviesInfo();
 
-                String year = jsonObject.getString("released");
+                if (!jsonObject.isNull("title"))
+                    moviesInfo.setTitle(jsonObject.getString("title"));
+                if (!jsonObject.isNull("released"))
+                    moviesInfo.setDate(jsonObject.getString("released"));
+                if (!jsonObject.isNull("overview"))
+                    moviesInfo.setOverviews(jsonObject.getString("overview"));
+                if (!jsonObject.isNull("ids")) {
+                    String imdb = jsonObject.getJSONObject("ids").getString("imdb");
+                    moviesInfo.setImageResource(imdb);
 
-                JSONObject image = jsonObject.getJSONObject("images");
-                JSONObject poster = image.getJSONObject("poster");
-                String thumb = poster.getString("thumb");
-
-                Log.i(LOG_TAG, title + "  " + year + "  " + thumb);
-
-                MoviesInfo movie = new MoviesInfo(title, year, thumb);
-
-
-                moviesList.add(movie);
+                }
+                moviesList.add(moviesInfo);
             }
             return moviesList;
         } catch (JSONException e) {
@@ -184,7 +181,6 @@ public final class MoviesUtils extends AsyncTask<String, String, String> {
         try {
 
             JSONArray jsonArray = new JSONArray(moviesJSON);
-            System.out.println(jsonArray);
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 MoviesInfo movies = new MoviesInfo();
@@ -198,11 +194,9 @@ public final class MoviesUtils extends AsyncTask<String, String, String> {
                         movies.setYear(movie.getInt("year"));
                     if (!movie.isNull("overview"))
                         movies.setOverviews(movie.getString("overview"));
-                    if (!movie.isNull("images")) {
-                        JSONObject jj = movie.getJSONObject("images").getJSONObject("poster");
-                        if (!jj.isNull("thumb")) {
-                            movies.setImageResource(jj.getString("thumb"));
-                        }
+                    if (!jsonObject.isNull("ids")) {
+                        String imdb = jsonObject.getJSONObject("ids").getString("imdb");
+                        movies.setImageResource(imdb);
                     }
 
 

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+
 import java.util.List;
 
 
@@ -38,7 +39,8 @@ public class MoviesAdapter extends ArrayAdapter<MoviesInfo> {
 
         MoviesInfo moviesUtilities = getItem(position);
 
-        ImageView moviesView = (ImageView) listItemView.findViewById(R.id.image);
+        ImageView moviesView = (ImageView) listItemView.findViewById(R.id.image_viewId);
+        System.out.println(moviesUtilities.getImageResource());
         try {
             Picasso.with(context)
                     .load(moviesUtilities.getImageResource()).resize(150, 150)

@@ -93,7 +93,7 @@ public class SearchActivity extends AppCompatActivity implements LoadingMoviesFr
     public void whenWriteInText(String s, int scroll) {
         String query = s.toString().replace(" ", "%20");
 
-        if (s.length() >= 3) {
+        if (s.length() >= 2) {
             String url = URLs.getSearchURL(query, page_count);
 
             if (moviesUtils != null && moviesUtils.getStatus() == AsyncTask.Status.RUNNING) {
