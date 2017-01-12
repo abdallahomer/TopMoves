@@ -60,18 +60,14 @@ public class SearchAdapter extends BaseAdapter {
         }
 
         Log.i("Details",moviesUtilities.getTitle()+moviesUtilities.getYear()+moviesUtilities.getOverview());
-        TextView overview = (TextView)convertView.findViewById(R.id.search_overview_id);
-        String ov = moviesUtilities.getOverview();
-        overview.setText(ov);
-        System.out.println("abdallah"+overview);
 
         TextView titleView = (TextView) convertView.findViewById(R.id.search_movieTitle_id);
         String title = moviesUtilities.getTitle();
         titleView.setText(title);
 
         TextView releaseDateView = (TextView) convertView.findViewById(R.id.search_movieDate_id);
-        int year = moviesUtilities.getYear();
-        releaseDateView.setText(year+"");
+        String year = moviesUtilities.getYear();
+        releaseDateView.setText(year);
 
 
 

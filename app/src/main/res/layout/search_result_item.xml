@@ -24,7 +24,7 @@
 
         <TextView
             android:id="@+id/search_movieTitle_id"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
             android:textAppearance="?android:textAppearanceLarge"
@@ -40,18 +40,7 @@
             android:textAppearance="?android:textAppearanceMedium"
             android:textColor="@color/releaseYearColor"
             tools:text="25 april 2015" />
-        <TextView
-            android:id="@+id/search_overview_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/padding"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="@color/releaseYearColor"
-            android:maxLines="7"
-            android:maxHeight="30dp"
-            android:textSize="14sp"
-            tools:text="Shortly overview"
-            />
+
 
     </LinearLayout>
 

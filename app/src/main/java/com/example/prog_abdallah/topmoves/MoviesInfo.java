@@ -25,17 +25,17 @@ public class MoviesInfo {
         this.imageResource = imageResource;
     }
 
-    public void setYear(int year) {
+    public void setYear(String year) {
         this.year = year;
     }
 
     String overviews;
 
-    public int getYear() {
+    public String getYear() {
         return year;
     }
 
-    int year;
+    String year;
 
     public MoviesInfo(String title, String date, String imageResource) {
         this.title = title;

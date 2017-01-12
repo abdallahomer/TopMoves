@@ -63,7 +63,7 @@ public final class MoviesUtils extends AsyncTask<String, String, String> {
     protected void onPostExecute(String jsonResponse) {
         List<MoviesInfo> movies;
 
-        if (requestUrl.contains("?query=")) {
+        if (requestUrl.contains("?s=")) {
             movies = extractFeatureFromJsonToSearchActivity(jsonResponse);
         } else {
             movies = extractFeatureFromJsonToMainActivity(jsonResponse);
@@ -104,7 +104,7 @@ public final class MoviesUtils extends AsyncTask<String, String, String> {
             if (urlConnection.getResponseCode() == 200) {
                 inputStream = urlConnection.getInputStream();
                 jsonResponse = readFromStream(inputStream);
-                Log.i(LOG_TAG, jsonResponse);
+               // Log.i(LOG_TAG, jsonResponse);
             } else {
                 Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
             }
@@ -177,43 +177,40 @@ public final class MoviesUtils extends AsyncTask<String, String, String> {
             return null;
         }
         List<MoviesInfo> moviesList = new ArrayList<>();
+        System.out.println("abdallah"+moviesJSON);
 
         try {
 
-            JSONArray jsonArray = new JSONArray(moviesJSON);
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                MoviesInfo movies = new MoviesInfo();
-
-                if (!jsonObject.isNull("movie")) {
-                    JSONObject movie = jsonObject.getJSONObject("movie");
-
-                    if (!movie.isNull("title"))
-                        movies.setTitle(movie.getString("title"));
-                    if (!movie.isNull("year"))
-                        movies.setYear(movie.getInt("year"));
-                    if (!movie.isNull("overview"))
-                        movies.setOverviews(movie.getString("overview"));
-                    if (!jsonObject.isNull("ids")) {
-                        String imdb = jsonObject.getJSONObject("ids").getString("imdb");
-                        movies.setImageResource(imdb);
-                    }
+            JSONObject jsonObject = new JSONObject(moviesJSON);
+            if (!jsonObject.isNull("Search")) {
+                JSONArray search = jsonObject.getJSONArray("Search");
 
 
-                    Log.i(LOG_TAG, movies.getTitle());
-                    Log.i(LOG_TAG, movies.getYear() + " ");
-                    Log.i(LOG_TAG, movies.getImageResource() + "  ");
-                    Log.i(LOG_TAG, movies.getOverview() + "");
+                for (int i = 0; i < search.length(); i++) {
+                    JSONObject det = search.getJSONObject(i);
+                    MoviesInfo moviesInfo = new MoviesInfo();
+                    if (!det.isNull("Title"))
+                        moviesInfo.setTitle(det.getString("Title"));
+                    if (!det.isNull("Year"))
+                        moviesInfo.setYear(det.getString("Year"));
+                    if (!det.isNull("Poster"))
+                        moviesInfo.setImageResource(det.getString("Poster"));
 
+                    moviesList.add(moviesInfo);
 
-                    moviesList.add(movies);
+                    Log.i(LOG_TAG, moviesInfo.getTitle());
+                    Log.i(LOG_TAG, moviesInfo.getYear() + "");
+                    Log.i(LOG_TAG, moviesInfo.getImageResource());
                 }
             }
+
+            return moviesList;
+
         } catch (JSONException e) {
             Log.e("QueryUtils", "Problem parsing the movieQuake JSON results", e);
         }
 
-        return moviesList;
+        return null;
     }
 
 

@@ -39,18 +39,6 @@ public class MoviesAdapter extends ArrayAdapter<MoviesInfo> {
 
         MoviesInfo moviesUtilities = getItem(position);
 
-        ImageView moviesView = (ImageView) listItemView.findViewById(R.id.image_viewId);
-        System.out.println(moviesUtilities.getImageResource());
-        try {
-            Picasso.with(context)
-                    .load(moviesUtilities.getImageResource()).resize(150, 150)
-                    //.centerCrop()
-                    .into(moviesView);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
         TextView titleView = (TextView) listItemView.findViewById(R.id.movieTitle);
         String title = moviesUtilities.getTitle();
         titleView.setText(title);
@@ -58,6 +46,9 @@ public class MoviesAdapter extends ArrayAdapter<MoviesInfo> {
         TextView releaseDateView = (TextView) listItemView.findViewById(R.id.movieDate);
         String releaseDate = moviesUtilities.getDate();
         releaseDateView.setText(releaseDate);
+        TextView overview = (TextView)listItemView.findViewById(R.id.overview_id);
+        String overviewText = moviesUtilities.getOverview();
+        overview.setText(overviewText);
 
         Log.i("Movies Data  ", moviesUtilities.getDate() + moviesUtilities.getImageResource() + moviesUtilities.getTitle());
 
