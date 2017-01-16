@@ -1,5 +1,6 @@
 package com.example.prog_abdallah.topmoves;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,18 +9,20 @@ import android.text.TextWatcher;
 import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Akshay on 6/26/2016.
+ * Created by ProG_AbdALlAh on 1/16/2017.
  */
 public class SearchActivity extends AppCompatActivity implements LoadingMoviesFromList, TextWatcher {
     EditText editSearch;
     ListView moviesListView;
     private SearchAdapter searchAdapter;
     public static List<MoviesInfo> mMovieList;
+    TextView noInternet;
 
     int page_count = 1;
     int max_pages = 100;
@@ -32,9 +35,15 @@ public class SearchActivity extends AppCompatActivity implements LoadingMoviesFr
         setContentView(R.layout.search_movies);
 
         editSearch = (EditText) findViewById(R.id.search_id);
-        mMovieList = new ArrayList<MoviesInfo>();
+        noInternet = (TextView) findViewById(R.id.no_internet_id);
+        mMovieList = new ArrayList<>();
 
         moviesListView = (ListView) findViewById(R.id.search_movies_list_view);
+        if (!CheckInternet.isOnline(getApplicationContext())) {
+            noInternet.setText(R.string.no_internet);
+        } else {
+            noInternet.setText("");
+        }
         setListViewAdapter();
         moviesListView.setOnScrollListener(onScrollListener());
 
@@ -85,7 +94,10 @@ public class SearchActivity extends AppCompatActivity implements LoadingMoviesFr
 
     @Override
     public void afterTextChanged(Editable s) {
-        whenWriteInText(s.toString(), 0);
+        if (CheckInternet.isOnline(getApplicationContext())){
+            whenWriteInText(s.toString(), 0);
+        }
+        noInternet.setText("");
 
     }
 
@@ -106,11 +118,21 @@ public class SearchActivity extends AppCompatActivity implements LoadingMoviesFr
 
     @Override
     public void onPopularMoviesLoaded(List<MoviesInfo> movies, int scroll) {
-        if (scroll == 1) {
-            mMovieList.addAll(movies);
-        } else {
-            mMovieList = movies;
+        if (movies!=null){
+            if (scroll == 1) {
+                mMovieList.addAll(movies);
+            } else {
+                mMovieList = movies;
+            }
+            searchAdapter.notifyDataSetChanged();
         }
-        searchAdapter.notifyDataSetChanged();
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(this,MoviesActivity.class);
+        startActivity(i);
     }
 }

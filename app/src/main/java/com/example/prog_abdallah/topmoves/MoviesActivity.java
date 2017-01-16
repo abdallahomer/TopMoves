@@ -32,16 +32,15 @@ public class MoviesActivity extends AppCompatActivity implements LoadingMoviesFr
         setContentView(R.layout.activity_movies);
         listViewMovies = (ListView) findViewById(R.id.top_movies_list_view);
         popularMoves = new ArrayList<>();
-        noInternet = (TextView)findViewById(R.id.no_internet);
-
-        if(CheckInternet.isOnline(getApplicationContext())){
+        noInternet = (TextView) findViewById(R.id.no_internet);
+        if (CheckInternet.isOnline(getApplicationContext())) {
             View waiting = findViewById(R.id.waiting);
             waiting.setVisibility(View.GONE);
             getDataFromUrl(URLs.getTopMoviesURL("popular", page_count));
             moviesAdapter = new MoviesAdapter(this, popularMoves);
             listViewMovies.setAdapter(moviesAdapter);
             listViewMovies.setOnScrollListener(onScrollListener());
-        }else{
+        } else {
             View waiting = findViewById(R.id.waiting);
             waiting.setVisibility(View.GONE);
             noInternet.setText(R.string.no_internet);
@@ -92,7 +91,6 @@ public class MoviesActivity extends AppCompatActivity implements LoadingMoviesFr
             case R.id.search_icon:
                 Intent i = new Intent(this, SearchActivity.class);
                 startActivity(i);
-
         }
         return super.onOptionsItemSelected(item);
 
@@ -100,8 +98,8 @@ public class MoviesActivity extends AppCompatActivity implements LoadingMoviesFr
 
     @Override
     public void onPopularMoviesLoaded(List<MoviesInfo> movies, int scroll) {
-
         popularMoves.addAll(movies);
         moviesAdapter.notifyDataSetChanged();
+
     }
 }
