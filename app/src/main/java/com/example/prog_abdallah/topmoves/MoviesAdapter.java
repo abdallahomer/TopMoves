@@ -46,9 +46,6 @@ public class MoviesAdapter extends ArrayAdapter<MoviesInfo> {
         TextView releaseDateView = (TextView) listItemView.findViewById(R.id.movieDate);
         String releaseDate = moviesUtilities.getDate();
         releaseDateView.setText(releaseDate);
-        TextView overview = (TextView)listItemView.findViewById(R.id.overview_id);
-        String overviewText = moviesUtilities.getOverview();
-        overview.setText(overviewText);
 
         Log.i("Movies Data  ", moviesUtilities.getDate() + moviesUtilities.getImageResource() + moviesUtilities.getTitle());
 

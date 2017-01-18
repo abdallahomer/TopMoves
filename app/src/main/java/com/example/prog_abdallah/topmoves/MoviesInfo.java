@@ -8,6 +8,7 @@ public class MoviesInfo {
     String title;
     String date;
     String imageResource;
+    String year;
 
     public void setOverviews(String overviews) {
         this.overviews = overviews;
@@ -34,8 +35,6 @@ public class MoviesInfo {
     public String getYear() {
         return year;
     }
-
-    String year;
 
     public MoviesInfo(String title, String date, String imageResource) {
         this.title = title;

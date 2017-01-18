@@ -7,5 +7,6 @@
     <color name="titleColor">#2B3D4D</color>
     <color name="backgroundColor">#ffffff</color>
     <color name="releaseColor">#FF337EC1</color>
+    <color name="gener_background">#0000ff</color>
 
 </resources>

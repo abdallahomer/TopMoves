@@ -3,4 +3,6 @@
     <dimen name="activity_horizontal_margin">12dp</dimen>
     <dimen name="activity_vertical_margin">12dp</dimen>
     <dimen name="padding">12dp</dimen>
+    <dimen name="cardMarginHorizontal">12dp</dimen>
+    <dimen name="cardMarginVertical">10dp</dimen>
 </resources>

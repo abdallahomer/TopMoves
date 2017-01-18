@@ -34,8 +34,6 @@ public class MoviesActivity extends AppCompatActivity implements LoadingMoviesFr
         popularMoves = new ArrayList<>();
         noInternet = (TextView) findViewById(R.id.no_internet);
         if (CheckInternet.isOnline(getApplicationContext())) {
-            View waiting = findViewById(R.id.waiting);
-            waiting.setVisibility(View.GONE);
             getDataFromUrl(URLs.getTopMoviesURL("popular", page_count));
             moviesAdapter = new MoviesAdapter(this, popularMoves);
             listViewMovies.setAdapter(moviesAdapter);
@@ -98,8 +96,18 @@ public class MoviesActivity extends AppCompatActivity implements LoadingMoviesFr
 
     @Override
     public void onPopularMoviesLoaded(List<MoviesInfo> movies, int scroll) {
-        popularMoves.addAll(movies);
-        moviesAdapter.notifyDataSetChanged();
+        if(movies!=null){
+            View waiting = findViewById(R.id.waiting);
+            waiting.setVisibility(View.GONE);
+            popularMoves.addAll(movies);
+            moviesAdapter.notifyDataSetChanged();
+        }else{
+            View waiting = findViewById(R.id.waiting);
+            waiting.setVisibility(View.GONE);
+            noInternet.setText(R.string.no_movies);
+        }
+
+
 
     }
 }
