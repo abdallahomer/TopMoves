@@ -104,7 +104,7 @@ public final class MoviesUtils extends AsyncTask<String, String, String> {
             if (urlConnection.getResponseCode() == 200) {
                 inputStream = urlConnection.getInputStream();
                 jsonResponse = readFromStream(inputStream);
-               // Log.i(LOG_TAG, jsonResponse);
+               Log.i(LOG_TAG, jsonResponse);
             } else {
                 Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
             }
