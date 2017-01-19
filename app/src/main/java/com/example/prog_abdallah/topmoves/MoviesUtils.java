@@ -23,7 +23,7 @@ import java.util.List;
 
 
 public final class MoviesUtils extends AsyncTask<String, String, String> {
-    private static final String LOG_TAG = MoviesUtils.class.getSimpleName();
+    private static final String TAG = MoviesUtils.class.getSimpleName();
     private LoadingMoviesFromList loadingMoviesFromList;
     Context context;
     String requestUrl;
@@ -46,14 +46,14 @@ public final class MoviesUtils extends AsyncTask<String, String, String> {
     @Override
     protected String doInBackground(String... strings) {
         URL url = createUrl(requestUrl);
-        Log.i(LOG_TAG, requestUrl);
+        Log.i(TAG, requestUrl);
 
         String jsonResponse = null;
         try {
             jsonResponse = makeHttpRequest(url);
             System.out.println("Http connected");
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Problem making the HTTP request.", e);
+            Log.e(TAG, "Problem making the HTTP request.", e);
         }
 
         return jsonResponse;
@@ -77,7 +77,7 @@ public final class MoviesUtils extends AsyncTask<String, String, String> {
         try {
             url = new URL(stringUrl);
         } catch (MalformedURLException e) {
-            Log.e(LOG_TAG, "Problem building the URL ", e);
+            Log.e(TAG, "Problem building the URL ", e);
         }
         return url;
     }
@@ -104,12 +104,12 @@ public final class MoviesUtils extends AsyncTask<String, String, String> {
             if (urlConnection.getResponseCode() == 200) {
                 inputStream = urlConnection.getInputStream();
                 jsonResponse = readFromStream(inputStream);
-               Log.i(LOG_TAG, jsonResponse);
+                Log.i(TAG, jsonResponse);
             } else {
-                Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
+                Log.e(TAG, "Error response code: " + urlConnection.getResponseCode());
             }
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Problem retrieving the movie JSON results.", e);
+            Log.e(TAG, "Problem retrieving the movie JSON results.", e);
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -157,11 +157,32 @@ public final class MoviesUtils extends AsyncTask<String, String, String> {
                     moviesInfo.setDate(jsonObject.getString("released"));
                 if (!jsonObject.isNull("overview"))
                     moviesInfo.setOverviews(jsonObject.getString("overview"));
+                if (!jsonObject.isNull("year"))
+                    moviesInfo.setYear(jsonObject.getString("year"));
+                if (!jsonObject.isNull("tagline"))
+                    moviesInfo.setTagLine(jsonObject.getString("tagline"));
+                if (!jsonObject.isNull("runtime"))
+                    moviesInfo.setRuntime(jsonObject.getInt("runtime"));
+                if (!jsonObject.isNull("trailer"))
+                    moviesInfo.setTrailer(jsonObject.getString("trailer"));
+                if (!jsonObject.isNull("homepage"))
+                    moviesInfo.setHomePage(jsonObject.getString("homepage"));
+                if (!jsonObject.isNull("rating"))
+                    moviesInfo.setRating(jsonObject.getDouble("rating"));
+                if (!jsonObject.isNull("votes"))
+                    moviesInfo.setVotes(jsonObject.getInt("votes"));
                 if (!jsonObject.isNull("ids")) {
-                    String imdb = jsonObject.getJSONObject("ids").getString("imdb");
-                    moviesInfo.setImageResource(imdb);
-
+                    JSONObject ids = jsonObject.getJSONObject("ids");
+                    if (!ids.isNull("tmdb"))
+                        moviesInfo.setTmdb(ids.getInt("tmdb"));
                 }
+                if (!jsonObject.isNull("genres")) {
+                    JSONArray genres = jsonObject.getJSONArray("genres");
+                    moviesInfo.setGenres(genres.toString());
+                }
+
+                Log.i(TAG, moviesInfo.getOverview() + " +++ " + moviesInfo.getGenres() + " +++ " + moviesInfo.getTmdb() + " +++ " + moviesInfo.getYear() + " +++ " + moviesInfo.getTitle() + " +++ " + moviesInfo.getHomePage() + " +++ " + moviesInfo.getVotes() + " +++ " + moviesInfo.getTagLine() + " +++ " + moviesInfo.getTrailer() + " +++ " + moviesInfo.getRating() + " +++ " + moviesInfo.getDate() + " +++ " + moviesInfo.getRuntime());
+
                 moviesList.add(moviesInfo);
             }
             return moviesList;
@@ -177,7 +198,7 @@ public final class MoviesUtils extends AsyncTask<String, String, String> {
             return null;
         }
         List<MoviesInfo> moviesList = new ArrayList<>();
-        System.out.println("abdallah"+moviesJSON);
+        System.out.println("abdallah" + moviesJSON);
 
         try {
 
@@ -198,9 +219,9 @@ public final class MoviesUtils extends AsyncTask<String, String, String> {
 
                     moviesList.add(moviesInfo);
 
-                    Log.i(LOG_TAG, moviesInfo.getTitle());
-                    Log.i(LOG_TAG, moviesInfo.getYear() + "");
-                    Log.i(LOG_TAG, moviesInfo.getImageResource());
+                    Log.i(TAG, moviesInfo.getTitle());
+                    Log.i(TAG, moviesInfo.getYear() + "");
+                    Log.i(TAG, moviesInfo.getImageResource());
                 }
             }
 

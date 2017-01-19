@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +45,27 @@ public class MoviesActivity extends AppCompatActivity implements LoadingMoviesFr
             noInternet.setText(R.string.no_internet);
         }
 
+        listViewMovies.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+                MoviesInfo movies = popularMoves.get(position);
+
+                Intent intent = new Intent(MoviesActivity.this,MoviesDetails.class);
+                intent.putExtra("title", movies.getTitle());
+                intent.putExtra("year", movies.getYear());
+                intent.putExtra("overview", movies.getOverview());
+                intent.putExtra("tagLine", movies.getTagLine());
+                intent.putExtra("runtime", movies.getRuntime());
+                intent.putExtra("trailer", movies.getTrailer());
+                intent.putExtra("homePage", movies.getHomePage());
+                intent.putExtra("votes", movies.getVotes());
+                intent.putExtra("year", movies.getYear());
+                intent.putExtra("year", movies.getYear());
+
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -106,7 +128,6 @@ public class MoviesActivity extends AppCompatActivity implements LoadingMoviesFr
             waiting.setVisibility(View.GONE);
             noInternet.setText(R.string.no_movies);
         }
-
 
 
     }

@@ -9,6 +9,83 @@ public class MoviesInfo {
     String date;
     String imageResource;
     String year;
+    String overviews;
+    String tagLine;
+    int runtime;
+    String trailer;
+    String homePage;
+
+    public String getGenres() {
+        return genres;
+    }
+
+    public void setGenres(String genres) {
+        this.genres = genres;
+    }
+
+    String genres;
+
+    public int getTmdb() {
+        return tmdb;
+    }
+
+    public void setTmdb(int tmdb) {
+        this.tmdb = tmdb;
+    }
+
+    int tmdb;
+
+    public String getTagLine() {
+        return tagLine;
+    }
+
+    public void setTagLine(String tagLine) {
+        this.tagLine = tagLine;
+    }
+
+    public int getRuntime() {
+        return runtime;
+    }
+
+    public void setRuntime(int runtime) {
+        this.runtime = runtime;
+    }
+
+    public String getTrailer() {
+        return trailer;
+    }
+
+    public void setTrailer(String trailer) {
+        this.trailer = trailer;
+    }
+
+    public String getHomePage() {
+        return homePage;
+    }
+
+    public void setHomePage(String homePage) {
+        this.homePage = homePage;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public int getVotes() {
+        return votes;
+    }
+
+    public void setVotes(int votes) {
+        this.votes = votes;
+    }
+
+    double rating;
+    int votes;
+
 
     public void setOverviews(String overviews) {
         this.overviews = overviews;
@@ -30,28 +107,14 @@ public class MoviesInfo {
         this.year = year;
     }
 
-    String overviews;
 
     public String getYear() {
         return year;
     }
 
-    public MoviesInfo(String title, String date, String imageResource) {
-        this.title = title;
-        this.date = date;
-        this.imageResource = imageResource;
-    }
 
     public MoviesInfo() {
     }
-
-    public MoviesInfo(String title, String overview, String imageResource, String date) {
-        this.title = title;
-        this.overviews = overview;
-        this.imageResource = imageResource;
-        this.date = date;
-    }
-
 
     public String getTitle() {
         return title;
@@ -71,7 +134,6 @@ public class MoviesInfo {
     public String getOverview() {
         return overviews;
     }
-
 
 
 }
