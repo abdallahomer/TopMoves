@@ -5,4 +5,5 @@
     <dimen name="padding">12dp</dimen>
     <dimen name="cardMarginHorizontal">12dp</dimen>
     <dimen name="cardMarginVertical">10dp</dimen>
+    <dimen name="cardDetailsMarginLeftRight">5dp</dimen>
 </resources>

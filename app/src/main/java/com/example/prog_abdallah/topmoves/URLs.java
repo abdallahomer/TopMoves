@@ -10,6 +10,7 @@ public class URLs {
     public static final String BASE_URL = "https://api.trakt.tv/";
     public static final String BASE_URL_1 = "http://www.omdbapi.com/?";
     public static final String CLIENT_ID = "721384d35fa749f453b029fac337f725566c5dbae889d1a756cb1c9752d259b7";
+    public static final String YOUTUBE_ANDROID_PLAYER_API = "AIzaSyAGUCMusNHmgSA7lH7oY_PTrfCVcRGWUyY";
     public static final String LOG_TAG = URLs.class.getName();
 
     public static String getTopMoviesURL(String category,int page){

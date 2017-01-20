@@ -25,8 +25,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.prog_abdallah.topmoves.MoviesActivity"/>
         </activity>
-        <activity android:name=".MoviesDetails"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".MoviesDetails"/>
     </application>
 
 </manifest>

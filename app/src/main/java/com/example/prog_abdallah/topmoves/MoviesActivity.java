@@ -60,8 +60,6 @@ public class MoviesActivity extends AppCompatActivity implements LoadingMoviesFr
                 intent.putExtra("trailer", movies.getTrailer());
                 intent.putExtra("homePage", movies.getHomePage());
                 intent.putExtra("votes", movies.getVotes());
-                intent.putExtra("year", movies.getYear());
-                intent.putExtra("year", movies.getYear());
 
                 startActivity(intent);
             }
