@@ -7,5 +7,6 @@
     <string name="no_movies">"No popular movies now..."</string>
     <string name="no_match_movies">No match movies...</string>
     <string name="Home">Home</string>
+    <string name="Loading">Loading...</string>
 
 </resources>

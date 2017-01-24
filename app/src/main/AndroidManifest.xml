@@ -23,9 +23,10 @@
             android:label="@string/action_search">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.prog_abdallah.topmoves.MoviesActivity"/>
+                android:value="com.example.prog_abdallah.topmoves.MoviesActivity" />
         </activity>
-        <activity android:name=".MoviesDetails"/>
+        <activity android:name=".MoviesDetails" />
+        <activity android:name=".HomePageActivity"></activity>
     </application>
 
 </manifest>

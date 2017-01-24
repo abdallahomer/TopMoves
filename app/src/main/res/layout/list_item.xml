@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/cardMarginVertical"
@@ -19,36 +18,43 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:orientation="horizontal">
+
         <RelativeLayout
             android:layout_width="107dp"
             android:layout_height="wrap_content">
+
             <ImageView
+                android:id="@+id/image_view_id"
                 android:layout_width="match_parent"
                 android:layout_height="107dp"
-                android:id="@+id/image_view_id"
-                android:scaleType="fitXY"/>
+                android:scaleType="fitXY" />
+
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="19dp"
-                android:orientation="horizontal"
                 android:id="@+id/linear_Layout_rate_id"
-                android:background="#000">
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:background="#000"
+                android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="match_parent"
                     android:id="@+id/star_rate_id"
-                    android:src="@drawable/rate_it"/>
+                    android:layout_width="15dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/rate_it"
+                    android:layout_gravity="center_vertical"/>
+
                 <TextView
                     android:id="@+id/rate_num_id"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:textSize="15sp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="2dp"
                     android:layout_marginLeft="2dp"
                     android:layout_marginRight="2dp"
-                    tools:text="5.5"
-                    android:textColor="#fff"
+                    android:layout_marginStart="2dp"
                     android:gravity="center_vertical"
+                    android:textColor="#fff"
+                    android:textSize="15sp"
+                    tools:text="5.5"
                     />
 
             </LinearLayout>
@@ -57,7 +63,10 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -68,160 +77,174 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
-                    android:textAppearance="?android:textAppearanceLarge"
-                    android:textColor="#000"
-                    tools:text="San Andarias"/>
-
-                <TextView
-                    android:id="@+id/movieDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-medium"
                     android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="#FF030379"
-                    tools:text="25 april 2015" />
+                    android:textColor="#000"
+                    tools:text="San Andarias" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:text="Release year : "/>
+
+                    <TextView
+                        android:id="@+id/movieDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:textColor="#FF030379"
+                        tools:text="25 april 2015" />
+
+                </LinearLayout>
+
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_alignParentBottom="true">
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/action"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:background="@drawable/gener_background"
-                    android:fontFamily="sans-serif-light"
+                    android:layout_marginBottom="3dp"
                     android:layout_marginLeft="2dp"
                     android:layout_marginStart="2dp"
-                    android:layout_marginBottom="3dp"
-                    tools:text="action"
+                    android:background="@drawable/gener_background"
+                    android:fontFamily="sans-serif-light"
                     android:text="Action"
-                    android:visibility="gone"
                     android:textColor="#fff"
-                    />
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    tools:text="action" />
+
                 <TextView
                     android:id="@+id/adventure"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:background="@drawable/gener_background"
-                    android:fontFamily="sans-serif-light"
+                    android:layout_marginBottom="3dp"
                     android:layout_marginLeft="2dp"
                     android:layout_marginStart="2dp"
-                    android:layout_marginBottom="3dp"
-                    tools:text="action"
+                    android:background="@drawable/gener_background"
+                    android:fontFamily="sans-serif-light"
                     android:text="Adventure"
-                    android:visibility="gone"
                     android:textColor="#fff"
-                    />
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    tools:text="action" />
+
                 <TextView
                     android:id="@+id/comedy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:background="@drawable/gener_background"
-                    android:fontFamily="sans-serif-light"
+                    android:layout_marginBottom="3dp"
                     android:layout_marginLeft="2dp"
                     android:layout_marginStart="2dp"
-                    android:layout_marginBottom="3dp"
-                    tools:text="Comedy"
+                    android:background="@drawable/gener_background"
+                    android:fontFamily="sans-serif-light"
                     android:text="Comedy"
-                    android:visibility="gone"
                     android:textColor="#fff"
-                    />
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    tools:text="Comedy" />
+
                 <TextView
                     android:id="@+id/animation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:background="@drawable/gener_background"
-                    android:fontFamily="sans-serif-light"
+                    android:layout_marginBottom="3dp"
                     android:layout_marginLeft="2dp"
                     android:layout_marginStart="2dp"
-                    android:layout_marginBottom="3dp"
-                    tools:text="Animation"
+                    android:background="@drawable/gener_background"
+                    android:fontFamily="sans-serif-light"
                     android:text="Anime"
-                    android:visibility="gone"
                     android:textColor="#fff"
-                    />
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    tools:text="Animation" />
+
                 <TextView
                     android:id="@+id/crime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:background="@drawable/gener_background"
-                    android:fontFamily="sans-serif-light"
+                    android:layout_marginBottom="3dp"
                     android:layout_marginLeft="2dp"
                     android:layout_marginStart="2dp"
-                    android:layout_marginBottom="3dp"
-                    tools:text="Crime"
+                    android:background="@drawable/gener_background"
+                    android:fontFamily="sans-serif-light"
                     android:text="Crime"
-                    android:visibility="gone"
                     android:textColor="#fff"
-                    />
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    tools:text="Crime" />
+
                 <TextView
                     android:id="@+id/drama"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:background="@drawable/gener_background"
-                    android:fontFamily="sans-serif-light"
+                    android:layout_marginBottom="3dp"
                     android:layout_marginLeft="2dp"
                     android:layout_marginStart="2dp"
-                    android:layout_marginBottom="3dp"
-                    tools:text="Drama"
+                    android:background="@drawable/gener_background"
+                    android:fontFamily="sans-serif-light"
                     android:text="Drama"
-                    android:visibility="gone"
                     android:textColor="#fff"
-                    />
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    tools:text="Drama" />
+
                 <TextView
                     android:id="@+id/romance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:background="@drawable/gener_background"
-                    android:fontFamily="sans-serif-light"
+                    android:layout_marginBottom="3dp"
                     android:layout_marginLeft="2dp"
                     android:layout_marginStart="2dp"
-                    android:layout_marginBottom="3dp"
-                    tools:text="Romance"
+                    android:background="@drawable/gener_background"
+                    android:fontFamily="sans-serif-light"
                     android:text="Romance"
-                    android:visibility="gone"
                     android:textColor="#fff"
-                    />
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    tools:text="Romance" />
+
                 <TextView
                     android:id="@+id/science_fiction"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:background="@drawable/gener_background"
-                    android:fontFamily="sans-serif-light"
+                    android:layout_marginBottom="3dp"
                     android:layout_marginLeft="2dp"
                     android:layout_marginStart="2dp"
-                    android:layout_marginBottom="3dp"
-                    tools:text="Science Fiction"
+                    android:background="@drawable/gener_background"
+                    android:fontFamily="sans-serif-light"
                     android:text="Sci-Fi"
-                    android:visibility="gone"
                     android:textColor="#fff"
-                    />
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    tools:text="Science Fiction" />
 
                 <TextView
                     android:id="@+id/none"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:background="@drawable/gener_background"
-                    android:fontFamily="sans-serf-light"
+                    android:layout_marginBottom="3dp"
                     android:layout_marginLeft="2dp"
                     android:layout_marginStart="2dp"
-                    android:layout_marginBottom="3dp"
-                    tools:text="None"
+                    android:background="@drawable/gener_background"
+                    android:fontFamily="sans-serf-light"
                     android:text="None"
-                    android:visibility="gone"
                     android:textColor="#fff"
-                    />
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    tools:text="None" />
 
             </LinearLayout>
 
