@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -46,6 +47,24 @@ public class SearchActivity extends AppCompatActivity implements LoadingMoviesFr
             noInternet.setText("");
         }
         setListViewAdapter();
+        moviesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                MoviesInfo movies = mMovieList.get(position);
+                Intent i = new Intent(SearchActivity.this,SearchDetailsActivity.class);
+                i.putExtra("overview",movies.getSearchOverview());
+                i.putExtra("release_date",movies.getSearchReleaseYear());
+                i.putExtra("genre_ids",movies.getSearchGenrs());
+                i.putExtra("id",movies.getSearchTMDB());
+                i.putExtra("title",movies.getSearchTitle());
+                i.putExtra("backdrop_path",movies.getSearchBackdrop());
+                i.putExtra("vote_count",movies.getSearchVotes());
+                i.putExtra("vote_average",movies.getSearchRate());
+                i.putExtra("poster_path",movies.getSearchPoster());
+
+                startActivity(i);
+            }
+        });
         moviesListView.setOnScrollListener(onScrollListener());
 
         editSearch.addTextChangedListener(this);

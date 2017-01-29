@@ -61,15 +61,53 @@ public final class MoviesUtils extends AsyncTask<String, String, String> {
 
     @Override
     protected void onPostExecute(String jsonResponse) {
-        List<MoviesInfo> movies;
+        List<MoviesInfo> movies = new ArrayList<>();
 
-        if (requestUrl.contains("?s=")) {
+        if (requestUrl.contains("search/")) {
             movies = extractFeatureFromJsonToSearchActivity(jsonResponse);
-        } else {
+        }
+        if (requestUrl.contains("movies")) {
             movies = extractFeatureFromJsonToMainActivity(jsonResponse);
+        }
+        if (requestUrl.contains("/images?")) {
+            movies = extractFeatureFromJsonPoster(jsonResponse);
         }
 
         loadingMoviesFromList.onPopularMoviesLoaded(movies, this.scroll);
+    }
+
+    private List<MoviesInfo> extractFeatureFromJsonPoster(String moviesJSON) {
+        if (TextUtils.isEmpty(moviesJSON)) {
+            return null;
+        }
+        List<MoviesInfo> moviesList = new ArrayList<>();
+
+        try {
+            JSONObject jsonObject = new JSONObject(moviesJSON);
+            JSONArray backdrops = jsonObject.getJSONArray("backdrops");
+
+            JSONObject jsonObject1 = backdrops.getJSONObject(0);
+            MoviesInfo moviesInfo = new MoviesInfo();
+            if (!jsonObject1.isNull("file_path")) {
+                moviesInfo.setBackdrop(jsonObject1.getString("file_path"));
+            }
+            JSONArray posters = jsonObject.getJSONArray("posters");
+            JSONObject jsonObject2 = posters.getJSONObject(0);
+            if (!jsonObject2.isNull("file_path")){
+                moviesInfo.setPoster(jsonObject2.getString("file_path"));
+            }
+            Log.i(TAG, "extractFeatureFromJsonPoster: " + jsonObject1.getString("file_path") +"   "+ jsonObject2.getString("file_path"));
+            moviesList.add(moviesInfo);
+
+
+            return moviesList;
+
+        } catch (JSONException e) {
+            Log.e("QueryUtils", "Problem parsing the movieQuake JSON results", e);
+        }
+
+        return null;
+
     }
 
     private static URL createUrl(String stringUrl) {
@@ -104,7 +142,7 @@ public final class MoviesUtils extends AsyncTask<String, String, String> {
             if (urlConnection.getResponseCode() == 200) {
                 inputStream = urlConnection.getInputStream();
                 jsonResponse = readFromStream(inputStream);
-                Log.i(TAG, jsonResponse);
+                //Log.i(TAG, jsonResponse);
             } else {
                 Log.e(TAG, "Error response code: " + urlConnection.getResponseCode());
             }
@@ -203,25 +241,43 @@ public final class MoviesUtils extends AsyncTask<String, String, String> {
         try {
 
             JSONObject jsonObject = new JSONObject(moviesJSON);
-            if (!jsonObject.isNull("Search")) {
-                JSONArray search = jsonObject.getJSONArray("Search");
+            if (!jsonObject.isNull("results")) {
+                JSONArray results = jsonObject.getJSONArray("results");
 
 
-                for (int i = 0; i < search.length(); i++) {
-                    JSONObject det = search.getJSONObject(i);
+                for (int i = 0; i < results.length(); i++) {
+                    JSONObject det = results.getJSONObject(i);
                     MoviesInfo moviesInfo = new MoviesInfo();
-                    if (!det.isNull("Title"))
-                        moviesInfo.setTitle(det.getString("Title"));
-                    if (!det.isNull("Year"))
-                        moviesInfo.setYear(det.getString("Year"));
-                    if (!det.isNull("Poster"))
-                        moviesInfo.setImageResource(det.getString("Poster"));
+                    if (!det.isNull("poster_path"))
+                        moviesInfo.setSearchPoster(det.getString("poster_path"));
+                    if (!det.isNull("overview"))
+                        moviesInfo.setSearchOverview(det.getString("overview"));
+                    if (!det.isNull("release_date"))
+                        moviesInfo.setSearchReleaseYear(det.getString("release_date"));
+                    if (!det.isNull("genre_ids")) {
+                        JSONArray genres = det.getJSONArray("genre_ids");
+                        moviesInfo.setSearchGenrs(genres.toString());
+                    }
+                    if (!det.isNull("id"))
+                        moviesInfo.setSearchTMDB(det.getInt("id"));
+                    if (!det.isNull("title"))
+                        moviesInfo.setSearchTitle(det.getString("title"));
+                    if (!det.isNull("backdrop_path"))
+                        moviesInfo.setSearchBackdrop(det.getString("backdrop_path"));
+                    if (!det.isNull("vote_count"))
+                        moviesInfo.setSearchVotes(det.getInt("vote_count"));
+                    if (!det.isNull("vote_average"))
+                        moviesInfo.setSearchRate(det.getDouble("vote_average"));
 
                     moviesList.add(moviesInfo);
 
-                    Log.i(TAG, moviesInfo.getTitle());
-                    Log.i(TAG, moviesInfo.getYear() + "");
-                    Log.i(TAG, moviesInfo.getImageResource());
+                    Log.i(TAG, moviesInfo.getSearchRate() + "");
+                    Log.i(TAG, moviesInfo.getSearchOverview());
+                    Log.i(TAG, moviesInfo.getSearchTMDB() + "");
+                    Log.i(TAG, moviesInfo.getSearchReleaseYear());
+                    Log.i(TAG, moviesInfo.getSearchGenrs());
+                    Log.i(TAG, moviesInfo.getSearchVotes() + "");
+                    Log.i(TAG, moviesInfo.getSearchTitle());
                 }
             }
 

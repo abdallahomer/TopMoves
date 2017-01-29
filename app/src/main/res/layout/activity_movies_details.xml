@@ -47,7 +47,6 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/activity_vertical_margin"
                     android:layout_marginLeft="@dimen/activity_vertical_margin"
-                    android:textSize="18sp"
                     android:textAppearance="?android:textAppearanceMedium"
                     android:id="@+id/details_title_id"
                     />
