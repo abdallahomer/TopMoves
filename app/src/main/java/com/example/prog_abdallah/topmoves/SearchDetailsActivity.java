@@ -68,7 +68,7 @@ public class SearchDetailsActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        titleView.setText(intent.getStringExtra("title")+ " | Backdrop");
+        titleView.setText(intent.getStringExtra("title")+ " | Poster");
         releaseView.setText(intent.getStringExtra("release_date"));
         rateView.setText(intent.getDoubleExtra("vote_average", 5) + "");
         voteView.setText(intent.getIntExtra("vote_count", 8255) + "");

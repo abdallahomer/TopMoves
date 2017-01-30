@@ -34,31 +34,48 @@
 
         </android.support.v7.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/cardMarginHorizontal"
-            android:layout_marginEnd="@dimen/cardMarginHorizontal"
-            android:layout_marginLeft="@dimen/cardMarginHorizontal"
-            android:layout_marginRight="@dimen/cardMarginHorizontal"
-            android:layout_marginStart="@dimen/cardMarginHorizontal"
-            app:cardBackgroundColor="#FFCCCFCD"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="2dp"
-            app:contentPadding="0dp">
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/search_details_title_id"
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/activity_vertical_margin"
-                android:layout_marginStart="@dimen/activity_vertical_margin"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:textColor="#000"
-                tools:text="Inception" />
+                android:layout_marginBottom="@dimen/cardMarginHorizontal"
+                android:layout_marginEnd="@dimen/cardMarginHorizontal"
+                android:layout_marginLeft="@dimen/cardMarginHorizontal"
+                android:layout_marginRight="@dimen/cardMarginHorizontal"
+                android:layout_marginStart="@dimen/cardMarginHorizontal"
+                app:cardBackgroundColor="#FFCCCFCD"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="2dp"
+                app:contentPadding="0dp">
 
-        </android.support.v7.widget.CardView>
+                <ImageView
+                    android:id="@+id/search_details_poster_id"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:scaleType="fitXY"
+                    android:layout_marginLeft="@dimen/activity_vertical_margin"
+                    android:layout_marginStart="@dimen/activity_vertical_margin"
+                    android:src="@mipmap/ic_poster" />
+
+                <TextView
+                    android:id="@+id/search_details_title_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginStart="50dp"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="#000"
+                    tools:text="Inception" />
+
+            </android.support.v7.widget.CardView>
+        </RelativeLayout>
+
+
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
@@ -77,9 +94,9 @@
                 android:id="@+id/search_details_home_id"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_gravity="center"
+                android:layout_gravity="center_horizontal"
                 android:scaleType="fitXY"
-                android:src="@drawable/tmdb" />
+                android:src="@mipmap/ic_home" />
 
         </android.support.v7.widget.CardView>
 
@@ -113,7 +130,7 @@
                         android:layout_marginStart="@dimen/activity_vertical_margin"
                         android:gravity="center_vertical"
                         android:scaleType="fitXY"
-                        android:src="@drawable/rate_it" />
+                        android:src="@mipmap/ic_rate_it" />
 
                     <TextView
                         android:id="@+id/search_details_rate_id"
@@ -157,7 +174,7 @@
                         android:layout_marginStart="@dimen/activity_vertical_margin"
                         android:gravity="center_vertical"
                         android:scaleType="fitXY"
-                        android:src="@drawable/year" />
+                        android:src="@mipmap/ic_year" />
 
                     <TextView
                         android:id="@+id/search_details_year_id"
@@ -203,7 +220,7 @@
                         android:layout_marginStart="@dimen/cardMarginHorizontal"
                         android:gravity="center_vertical"
                         android:scaleType="fitXY"
-                        android:src="@drawable/votes" />
+                        android:src="@mipmap/ic_vote" />
 
                     <TextView
                         android:id="@+id/search_details_vote_id"

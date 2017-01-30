@@ -21,7 +21,7 @@ public class MoviesDetails extends YouTubeBaseActivity implements YouTubePlayer.
 
     YouTubePlayerView youTubePlayerView;
     TextView titleView;
-    ImageView homeView;
+    ImageView homeView,imdbView;
     TextView clockView;
     TextView votesView;
     TextView yearView;
@@ -29,6 +29,7 @@ public class MoviesDetails extends YouTubeBaseActivity implements YouTubePlayer.
     TextView overviewView;
     Intent intent;
     String home;
+    String poster;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,7 @@ public class MoviesDetails extends YouTubeBaseActivity implements YouTubePlayer.
         yearView = (TextView) findViewById(R.id.details_year_id);
         taglineView = (TextView) findViewById(R.id.details_tagline_id);
         overviewView = (TextView) findViewById(R.id.details_overview_id);
+        imdbView = (ImageView)findViewById(R.id.imdb_view_id) ;
 
         intent = getIntent();
 
@@ -51,7 +53,9 @@ public class MoviesDetails extends YouTubeBaseActivity implements YouTubePlayer.
 
     private void init() {
         home = intent.getStringExtra("homePage");
-        Log.i(TAG, "init:             "+home);
+        poster = intent.getStringExtra("imdb");
+        Log.i(TAG, "init: " + poster);
+        Log.i(TAG, "init: " + home);
         titleView.setText(intent.getStringExtra("title") + " | Trailer [HD]");
         clockView.setText(intent.getIntExtra("runtime", 152) + "  min");
         votesView.setText(intent.getExtras().getInt("votes") + "");
@@ -65,6 +69,14 @@ public class MoviesDetails extends YouTubeBaseActivity implements YouTubePlayer.
 
                 Intent intent = new Intent(MoviesDetails.this, HomePageActivity.class);
                 intent.putExtra("homePage",home);
+                startActivity(intent);
+            }
+        });
+        imdbView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MoviesDetails.this, HomePageActivity.class);
+                intent.putExtra("homePage","http://www.imdb.com/title/"+poster);
                 startActivity(intent);
             }
         });

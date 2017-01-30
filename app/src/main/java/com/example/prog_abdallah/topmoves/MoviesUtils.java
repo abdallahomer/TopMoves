@@ -213,13 +213,15 @@ public final class MoviesUtils extends AsyncTask<String, String, String> {
                     JSONObject ids = jsonObject.getJSONObject("ids");
                     if (!ids.isNull("tmdb"))
                         moviesInfo.setTmdb(ids.getInt("tmdb"));
+                    if (!ids.isNull("imdb"))
+                        moviesInfo.setImdb(ids.getString("imdb"));
                 }
                 if (!jsonObject.isNull("genres")) {
                     JSONArray genres = jsonObject.getJSONArray("genres");
                     moviesInfo.setGenres(genres.toString());
                 }
 
-                Log.i(TAG, moviesInfo.getOverview() + " +++ " + moviesInfo.getGenres() + " +++ " + moviesInfo.getTmdb() + " +++ " + moviesInfo.getYear() + " +++ " + moviesInfo.getTitle() + " +++ " + moviesInfo.getHomePage() + " +++ " + moviesInfo.getVotes() + " +++ " + moviesInfo.getTagLine() + " +++ " + moviesInfo.getTrailer() + " +++ " + moviesInfo.getRating() + " +++ " + moviesInfo.getDate() + " +++ " + moviesInfo.getRuntime());
+                Log.i(TAG, moviesInfo.getImdb()+" +++ " + moviesInfo.getOverview() + " +++ " + moviesInfo.getGenres() + " +++ " + moviesInfo.getTmdb() + " +++ " + moviesInfo.getYear() + " +++ " + moviesInfo.getTitle() + " +++ " + moviesInfo.getHomePage() + " +++ " + moviesInfo.getVotes() + " +++ " + moviesInfo.getTagLine() + " +++ " + moviesInfo.getTrailer() + " +++ " + moviesInfo.getRating() + " +++ " + moviesInfo.getDate() + " +++ " + moviesInfo.getRuntime());
 
                 moviesList.add(moviesInfo);
             }

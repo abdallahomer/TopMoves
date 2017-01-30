@@ -28,6 +28,16 @@ public class MoviesInfo {
     String searchPoster;
     String searchGenrs;
 
+    public String getImdb() {
+        return imdb;
+    }
+
+    public void setImdb(String imdb) {
+        this.imdb = imdb;
+    }
+
+    String imdb;
+
     public String getBackdrop() {
         return backdrop;
     }

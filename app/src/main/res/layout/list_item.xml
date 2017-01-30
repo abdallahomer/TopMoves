@@ -40,7 +40,7 @@
                     android:id="@+id/star_rate_id"
                     android:layout_width="15dp"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/rate_it"
+                    android:src="@mipmap/ic_rate"
                     android:layout_gravity="center_vertical"/>
 
                 <TextView

@@ -38,7 +38,6 @@ public class MoviesAdapter extends ArrayAdapter<MoviesInfo> implements LoadingMo
     TextView genreAction;
     List<MoviesInfo> moviePoster;
     ImageView backdropView;
-    int positionView;
 
 
     public MoviesAdapter(Context context, List<MoviesInfo> movies) {
@@ -55,8 +54,6 @@ public class MoviesAdapter extends ArrayAdapter<MoviesInfo> implements LoadingMo
                     R.layout.list_item, viewGroup, false);
         }
 
-        positionView = position;
-
         MoviesInfo moviesUtilities = getItem(position);
         System.out.println(moviesUtilities.getGenres() +
                 " +++ " + moviesUtilities.getTmdb() +
@@ -65,7 +62,7 @@ public class MoviesAdapter extends ArrayAdapter<MoviesInfo> implements LoadingMo
                 " +++ " + moviesUtilities.getDate());
 
         int tmdb = moviesUtilities.getTmdb();
-        getDataFromURL(URLs.getPosterURL(tmdb));
+        getPosterFromURL(URLs.getPosterURL(tmdb));
         moviePoster = new ArrayList<>();
 
         titleView = (TextView) listItemView.findViewById(R.id.movieTitle);
@@ -136,7 +133,7 @@ public class MoviesAdapter extends ArrayAdapter<MoviesInfo> implements LoadingMo
         return listItemView;
     }
 
-    private void getDataFromURL(String url) {
+    private void getPosterFromURL(String url) {
         new MoviesUtils(context, url, this).execute();
     }
 
