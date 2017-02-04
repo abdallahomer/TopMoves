@@ -28,12 +28,22 @@ public final class MoviesUtils extends AsyncTask<String, String, String> {
     Context context;
     String requestUrl;
     int scroll;
+    private LoadingTrailerFromJSON loadingTrailerFromJSON;
+
+    public MoviesUtils(Context context, String requestUrl, LoadingTrailerFromJSON loadingTrailerFromJSON,LoadingMoviesFromList loadingMoviesFromList) {
+        this.context = context;
+        this.requestUrl = requestUrl;
+        this.loadingTrailerFromJSON = loadingTrailerFromJSON;
+        this.loadingMoviesFromList = loadingMoviesFromList;
+        scroll = 0;
+    }
 
     public MoviesUtils(Context context, String requestUrl, LoadingMoviesFromList loadingMoviesFromList) {
         this.context = context;
         this.requestUrl = requestUrl;
         this.loadingMoviesFromList = loadingMoviesFromList;
         scroll = 0;
+        loadingTrailerFromJSON = null;
     }
 
     public MoviesUtils(Context context, String requestUrl, int scroll, LoadingMoviesFromList loadingMoviesFromList) {
@@ -41,6 +51,7 @@ public final class MoviesUtils extends AsyncTask<String, String, String> {
         this.requestUrl = requestUrl;
         this.loadingMoviesFromList = loadingMoviesFromList;
         this.scroll = scroll;
+        loadingTrailerFromJSON = null;
     }
 
     @Override
@@ -62,6 +73,7 @@ public final class MoviesUtils extends AsyncTask<String, String, String> {
     @Override
     protected void onPostExecute(String jsonResponse) {
         List<MoviesInfo> movies = new ArrayList<>();
+        List<String> trailer = new ArrayList<>();
 
         if (requestUrl.contains("search/")) {
             movies = extractFeatureFromJsonToSearchActivity(jsonResponse);
@@ -72,8 +84,74 @@ public final class MoviesUtils extends AsyncTask<String, String, String> {
         if (requestUrl.contains("/images?")) {
             movies = extractFeatureFromJsonPoster(jsonResponse);
         }
+        if (requestUrl.contains("/reviews?")) {
+            movies = extractReviewsFromJsonReviews(jsonResponse);
+        }
+        if(requestUrl.contains("/videos?")){
+            trailer = extractTrailerFromJsonTrailer(jsonResponse);
+            loadingTrailerFromJSON.onTrailerLoaded(trailer);
+        }
 
         loadingMoviesFromList.onPopularMoviesLoaded(movies, this.scroll);
+    }
+
+    private List<String> extractTrailerFromJsonTrailer(String moviesJSON) {
+
+        if (TextUtils.isEmpty(moviesJSON)) {
+            return null;
+        }
+        List<String> moviesList = new ArrayList<>();
+
+        try {
+            JSONObject jsonObject = new JSONObject(moviesJSON);
+            if (!jsonObject.isNull("results")){
+                JSONArray results = jsonObject.getJSONArray("results");
+
+                for (int i = 0; i < results.length(); i++) {
+                    JSONObject jsonObject1 = results.getJSONObject(i);
+                    if (!jsonObject1.isNull("key"))
+                    moviesList.add(jsonObject1.getString("key"));
+                    Log.i(TAG, "extractTrailerFromJsonTrailer:     " + jsonObject1.getString("key"));
+                }
+            }
+
+            return moviesList;
+
+        } catch (JSONException e) {
+            Log.e("QueryUtils", "Problem parsing the movieQuake JSON results", e);
+        }
+
+
+        return null;
+    }
+
+    private List<MoviesInfo> extractReviewsFromJsonReviews(String moviesJSON) {
+        if (TextUtils.isEmpty(moviesJSON)) {
+            return null;
+        }
+        List<MoviesInfo> moviesList = new ArrayList<>();
+        try {
+            JSONObject jsonObject = new JSONObject(moviesJSON);
+            if (!jsonObject.isNull("results")){
+                JSONArray results = jsonObject.getJSONArray("results");
+
+                for (int i = 0; i < results.length(); i++) {
+                    MoviesInfo moviesInfo = new MoviesInfo();
+                    JSONObject jsonObject1 = results.getJSONObject(i);
+                    if (!jsonObject1.isNull("content"))
+                        moviesInfo.setReviews(jsonObject1.getString("content"));
+                    moviesList.add(moviesInfo);
+                    Log.i(TAG, "extractReviewsFromJsonReviews:           " + moviesInfo.getReviews());
+                }
+            }
+
+            return moviesList;
+
+        } catch (JSONException e) {
+            Log.e("QueryUtils", "Problem parsing the movieQuake JSON results", e);
+        }
+
+        return null;
     }
 
     private List<MoviesInfo> extractFeatureFromJsonPoster(String moviesJSON) {
@@ -93,10 +171,10 @@ public final class MoviesUtils extends AsyncTask<String, String, String> {
             }
             JSONArray posters = jsonObject.getJSONArray("posters");
             JSONObject jsonObject2 = posters.getJSONObject(0);
-            if (!jsonObject2.isNull("file_path")){
+            if (!jsonObject2.isNull("file_path")) {
                 moviesInfo.setPoster(jsonObject2.getString("file_path"));
             }
-            Log.i(TAG, "extractFeatureFromJsonPoster: " + jsonObject1.getString("file_path") +"   "+ jsonObject2.getString("file_path"));
+            Log.i(TAG, "extractFeatureFromJsonPoster: " + jsonObject1.getString("file_path") + "   " + jsonObject2.getString("file_path"));
             moviesList.add(moviesInfo);
 
 
@@ -221,7 +299,7 @@ public final class MoviesUtils extends AsyncTask<String, String, String> {
                     moviesInfo.setGenres(genres.toString());
                 }
 
-                Log.i(TAG, moviesInfo.getImdb()+" +++ " + moviesInfo.getOverview() + " +++ " + moviesInfo.getGenres() + " +++ " + moviesInfo.getTmdb() + " +++ " + moviesInfo.getYear() + " +++ " + moviesInfo.getTitle() + " +++ " + moviesInfo.getHomePage() + " +++ " + moviesInfo.getVotes() + " +++ " + moviesInfo.getTagLine() + " +++ " + moviesInfo.getTrailer() + " +++ " + moviesInfo.getRating() + " +++ " + moviesInfo.getDate() + " +++ " + moviesInfo.getRuntime());
+                Log.i(TAG, moviesInfo.getImdb() + " +++ " + moviesInfo.getOverview() + " +++ " + moviesInfo.getGenres() + " +++ " + moviesInfo.getTmdb() + " +++ " + moviesInfo.getYear() + " +++ " + moviesInfo.getTitle() + " +++ " + moviesInfo.getHomePage() + " +++ " + moviesInfo.getVotes() + " +++ " + moviesInfo.getTagLine() + " +++ " + moviesInfo.getTrailer() + " +++ " + moviesInfo.getRating() + " +++ " + moviesInfo.getDate() + " +++ " + moviesInfo.getRuntime());
 
                 moviesList.add(moviesInfo);
             }

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    android:layout_marginLeft="@dimen/cardMarginHorizontal"
+    android:layout_marginRight="@dimen/cardMarginHorizontal"
+    android:layout_marginTop="5dp"
+    app:cardBackgroundColor="#fff"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="2dp"
+    android:layout_gravity="center_vertical"
+    app:contentPadding="0dp">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:layout_gravity="center_vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/t_no_internet_p1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/no_internet_p1"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="#000"
+                />
+
+            <TextView
+                android:id="@+id/t_no_internet_p2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text=" Wi-Fi "
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/no_internet_color" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
+            <TextView
+                android:id="@+id/t_no_internet_p3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/no_internet_p3"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="#000" />
+
+            <TextView
+                android:id="@+id/t_no_internet_p4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text=" cellular data "
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/no_internet_color" />
+
+            <TextView
+                android:id="@+id/t_no_internet_p5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/no_inetrnet_p5"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="#000" />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/t_no_internet_p6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:text="then try again."
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="#000" />
+        <Button
+            android:id="@+id/t_retry_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Retry"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textAllCaps="false"
+            android:textColor="#000"/>
+
+    </LinearLayout>
+</RelativeLayout>
+
+</android.support.v7.widget.CardView>

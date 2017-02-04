@@ -2,6 +2,7 @@ package com.example.prog_abdallah.topmoves;
 
 import android.content.Intent;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,14 +15,16 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 
-public class MoviesDetails extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener {
+import java.util.List;
+
+public class MoviesDetails extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener, LoadingMoviesFromList, LoadingTrailerFromJSON {
 
     public static final String TAG = MoviesActivity.class.getName();
 
 
     YouTubePlayerView youTubePlayerView;
     TextView titleView;
-    ImageView homeView,imdbView;
+    ImageView homeView, imdbView;
     TextView clockView;
     TextView votesView;
     TextView yearView;
@@ -30,6 +33,11 @@ public class MoviesDetails extends YouTubeBaseActivity implements YouTubePlayer.
     Intent intent;
     String home;
     String poster;
+    TextView reviewView;
+    int tmdb;
+    View trailer1View;
+    String trailer_1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +52,18 @@ public class MoviesDetails extends YouTubeBaseActivity implements YouTubePlayer.
         yearView = (TextView) findViewById(R.id.details_year_id);
         taglineView = (TextView) findViewById(R.id.details_tagline_id);
         overviewView = (TextView) findViewById(R.id.details_overview_id);
-        imdbView = (ImageView)findViewById(R.id.imdb_view_id) ;
+        imdbView = (ImageView) findViewById(R.id.imdb_view_id);
+        reviewView = (TextView) findViewById(R.id.details_reviews_id);
+        trailer1View = findViewById(R.id.details_trailer1_id);
 
         intent = getIntent();
+        if (CheckInternet.isOnline(getApplicationContext())){
+            init();
+        }else{
+            Intent i = new Intent(MoviesDetails.this,NoInternetActivity.class);
+            startActivity(i);
+        }
 
-        init();
     }
 
     private void init() {
@@ -62,13 +77,15 @@ public class MoviesDetails extends YouTubeBaseActivity implements YouTubePlayer.
         yearView.setText(intent.getStringExtra("year"));
         taglineView.setText(intent.getStringExtra("tagLine"));
         overviewView.setText(intent.getStringExtra("overview"));
+        tmdb = intent.getExtras().getInt("tmdb");
+        Log.i(TAG, "init:                   " + tmdb);
         youTubePlayerView.initialize(URLs.YOUTUBE_ANDROID_PLAYER_API, this);
         homeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Intent intent = new Intent(MoviesDetails.this, HomePageActivity.class);
-                intent.putExtra("homePage",home);
+                intent.putExtra("homePage", home);
                 startActivity(intent);
             }
         });
@@ -76,12 +93,23 @@ public class MoviesDetails extends YouTubeBaseActivity implements YouTubePlayer.
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MoviesDetails.this, HomePageActivity.class);
-                intent.putExtra("homePage","http://www.imdb.com/title/"+poster);
+                intent.putExtra("homePage", "http://www.imdb.com/title/" + poster);
                 startActivity(intent);
             }
         });
 
+        getTrailerFromURL(URLs.getTrailerURL(tmdb));
+        getReviewFromURL(URLs.getReviewsURL(tmdb));
 
+        Log.i(TAG, "initiiation:   " + URLs.getReviewsURL(tmdb) + "   " + URLs.getTrailerURL(tmdb));
+    }
+
+    private void getTrailerFromURL(String url) {
+        new MoviesUtils(getApplicationContext(), url, this, this).execute();
+    }
+
+    private void getReviewFromURL(String url) {
+        new MoviesUtils(getApplicationContext(), url, this).execute();
     }
 
     @Override
@@ -104,10 +132,42 @@ public class MoviesDetails extends YouTubeBaseActivity implements YouTubePlayer.
         }
 
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i = new Intent(MoviesDetails.this,MoviesActivity.class);
+        Intent i = new Intent(MoviesDetails.this, MoviesActivity.class);
         startActivity(i);
+    }
+
+    @Override
+    public void onPopularMoviesLoaded(List<MoviesInfo> movies, int scroll) {
+        if (movies.isEmpty()) {
+            reviewView.setText("No Reviews now...");
+        } else {
+            String reviews = movies.get(0).getReviews();
+            Log.i(TAG, "init:             " + reviews);
+            reviewView.setText(reviews);
+        }
+
+    }
+
+    @Override
+    public void onTrailerLoaded(List<String> trailer) {
+        if (!trailer.isEmpty()) {
+            if (trailer.get(0)!=null) {
+                trailer_1 = trailer.get(0);
+                trailer1View.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent i = new Intent(Intent.ACTION_VIEW);
+                        i.setData(Uri.parse(URLs.YOUTUBE + trailer_1));
+                        startActivity(i);
+                    }
+                });
+            }
+        } else {
+            trailer1View.setVisibility(View.GONE);
+        }
     }
 }

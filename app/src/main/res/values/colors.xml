@@ -8,5 +8,5 @@
     <color name="backgroundColor">#ffffff</color>
     <color name="releaseColor">#FF337EC1</color>
     <color name="gener_background">#0000ff</color>
-
+    <color name="no_internet_color">#0abc5d</color>
 </resources>

@@ -28,6 +28,26 @@ public class MoviesInfo {
     String searchPoster;
     String searchGenrs;
 
+    public String getTrailerKey() {
+        return trailerKey;
+    }
+
+    public void setTrailerKey(String trailerKey) {
+        this.trailerKey = trailerKey;
+    }
+
+    String trailerKey;
+
+    public String getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(String reviews) {
+        this.reviews = reviews;
+    }
+
+    String reviews;
+
     public String getImdb() {
         return imdb;
     }

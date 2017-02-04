@@ -38,6 +38,7 @@ public class MoviesAdapter extends ArrayAdapter<MoviesInfo> implements LoadingMo
     TextView genreAction;
     List<MoviesInfo> moviePoster;
     ImageView backdropView;
+    int positionView;
 
 
     public MoviesAdapter(Context context, List<MoviesInfo> movies) {
@@ -54,6 +55,8 @@ public class MoviesAdapter extends ArrayAdapter<MoviesInfo> implements LoadingMo
                     R.layout.list_item, viewGroup, false);
         }
 
+        positionView = position;
+
         MoviesInfo moviesUtilities = getItem(position);
         System.out.println(moviesUtilities.getGenres() +
                 " +++ " + moviesUtilities.getTmdb() +
@@ -62,7 +65,7 @@ public class MoviesAdapter extends ArrayAdapter<MoviesInfo> implements LoadingMo
                 " +++ " + moviesUtilities.getDate());
 
         int tmdb = moviesUtilities.getTmdb();
-        getPosterFromURL(URLs.getPosterURL(tmdb));
+        getDataFromURL(URLs.getPosterURL(tmdb));
         moviePoster = new ArrayList<>();
 
         titleView = (TextView) listItemView.findViewById(R.id.movieTitle);
@@ -133,7 +136,7 @@ public class MoviesAdapter extends ArrayAdapter<MoviesInfo> implements LoadingMo
         return listItemView;
     }
 
-    private void getPosterFromURL(String url) {
+    private void getDataFromURL(String url) {
         new MoviesUtils(context, url, this).execute();
     }
 
@@ -145,33 +148,35 @@ public class MoviesAdapter extends ArrayAdapter<MoviesInfo> implements LoadingMo
 
     @Override
     public void onPopularMoviesLoaded(List<MoviesInfo> movies, int scroll) {
+        if(movies !=null){
+            MoviesInfo m = movies.get(0);
+            String backdrop = m.getPoster();
+            String poster = m.getBackdrop();
+            System.out.println(backdrop);
+            System.out.println();
+            System.out.println(poster);
+            try {
+                Picasso.with(getContext())
+                        .load("https://image.tmdb.org/t/p/w500/" + backdrop)
+                        .resize(281, 240)
+                        .centerCrop()
+                        .into(backdropView);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-        MoviesInfo m = movies.get(0);
-        String backdrop = m.getPoster();
-        String poster = m.getBackdrop();
-        System.out.println(backdrop);
-        System.out.println();
-        System.out.println(poster);
-        try {
-            Picasso.with(getContext())
-                    .load("https://image.tmdb.org/t/p/w500/" + backdrop)
-                    .resize(281, 240)
-                    .centerCrop()
-                    .into(backdropView);
-        } catch (Exception e) {
-            e.printStackTrace();
+            try {
+                Picasso.with(getContext())
+                        .load("https://image.tmdb.org/t/p/w500/"+poster)
+                        .resize(500, 500)
+                        .centerCrop()
+                        .into(posterView);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
         }
-
-        try {
-            Picasso.with(getContext())
-                    .load("https://image.tmdb.org/t/p/w500/"+poster)
-                    .resize(500, 500)
-                    .centerCrop()
-                    .into(posterView);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
 
 
     }

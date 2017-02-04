@@ -9,10 +9,10 @@ import android.util.Log;
 public class URLs {
     public static final String BASE_URL = "https://api.trakt.tv/";
     public static final String BASE_URL_1 = "https://api.themoviedb.org/3/";
-    public static final String POSTER_URL = "https://api.themoviedb.org/3/movie/";
     public static final String CLIENT_ID = "721384d35fa749f453b029fac337f725566c5dbae889d1a756cb1c9752d259b7";
     public static final String TMDB_API_KEY = "17e8cdf2666c1b20ef3323dc00c6e0e1";
     public static final String YOUTUBE_ANDROID_PLAYER_API = "AIzaSyAGUCMusNHmgSA7lH7oY_PTrfCVcRGWUyY";
+    public static final String YOUTUBE = "https://www.youtube.com/watch?v=";
     public static final String LOG_TAG = URLs.class.getName();
 
     public static String getTopMoviesURL(String category,int page){
@@ -43,7 +43,8 @@ public class URLs {
 
     public static String getPosterURL(int tmdb){
         StringBuilder url = new StringBuilder();
-        url.append(POSTER_URL)
+        url.append(BASE_URL_1)
+                .append("movie/")
                 .append(tmdb)
                 .append("/images?")
                 .append("api_key=")
@@ -52,6 +53,37 @@ public class URLs {
 
         return url.toString();
 
+    }
+
+    public static String getReviewsURL(int tmdb){
+        StringBuilder url = new StringBuilder();
+        url.append(BASE_URL_1)
+                .append("movie/")
+                .append(tmdb)
+                .append("/reviews?")
+                .append("api_key=")
+                .append(TMDB_API_KEY);
+        System.out.println("abdallah            " + url.toString());
+
+
+        return url.toString();
+
+        //https://api.themoviedb.org/3/movie/155/reviews?api_key=17e8cdf2666c1b20ef3323dc00c6e0e1
+    }
+
+    public static String getTrailerURL(int tmdb){
+        StringBuilder url = new StringBuilder();
+        url.append(BASE_URL_1)
+                .append("movie/")
+                .append(tmdb)
+                .append("/videos?")
+                .append("api_key=")
+                .append(TMDB_API_KEY);
+        System.out.println("abdallah            " + url.toString());
+
+        return url.toString();
+
+       // https://api.themoviedb.org/3/movie/603/videos?api_key=17e8cdf2666c1b20ef3323dc00c6e0e1
     }
 
 }

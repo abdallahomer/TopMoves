@@ -37,14 +37,15 @@ public class SearchActivity extends AppCompatActivity implements LoadingMoviesFr
         setContentView(R.layout.search_movies);
 
         editSearch = (EditText) findViewById(R.id.search_id);
-        noInternet = (TextView) findViewById(R.id.no_internet_id);
+        noInternet = (TextView) findViewById(R.id.search_no_internet_id);
         mMovieList = new ArrayList<>();
 
         moviesListView = (ListView) findViewById(R.id.search_movies_list_view);
         if (!CheckInternet.isOnline(getApplicationContext())) {
-            noInternet.setText(R.string.no_internet);
+          noInternet.setText(R.string.no_internet);
         } else {
             noInternet.setText("");
+            noInternet.setVisibility(View.INVISIBLE);
         }
         setListViewAdapter();
         moviesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -116,8 +117,9 @@ public class SearchActivity extends AppCompatActivity implements LoadingMoviesFr
     public void afterTextChanged(Editable s) {
         if (CheckInternet.isOnline(getApplicationContext())){
             whenWriteInText(s.toString(), 0);
+            noInternet.setText("");
+            noInternet.setVisibility(View.INVISIBLE);
         }
-        noInternet.setText("");
 
     }
 
