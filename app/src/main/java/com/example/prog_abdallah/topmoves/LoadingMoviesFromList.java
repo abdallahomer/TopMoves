@@ -7,4 +7,5 @@ import java.util.List;
 public interface LoadingMoviesFromList {
 
     void onPopularMoviesLoaded(List<MoviesInfo> movies, int scroll);
+
 }
